@@ -118,3 +118,8 @@ create or replace function hashPassword(u varchar(50), p varchar(50))
 			return md5(u || p || 'saltmachine');
 		end;
 	$$ language plpgsql;
+	
+insert into ers_reimbursement (reimb_amount, reimb_submitted, reimb_author, reimb_status_id, reimb_type_id) values 
+	(20, now(), 3, 1, 1);
+	
+select * from ers_reimbursement;
