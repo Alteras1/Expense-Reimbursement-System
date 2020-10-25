@@ -47,5 +47,9 @@ public class ReimbType {
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+		return "ReimbType [typeId=" + typeId + ", type=" + type + "]";
+	}
 	
 }

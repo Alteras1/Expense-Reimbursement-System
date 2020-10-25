@@ -25,4 +25,22 @@ public class ReimbStatusDaoTest {
 		assertFalse(statuses.size() == 0);
 	}
 
+	@Test
+	public void findByIdTest() {
+		ReimbStatus s = rsd.findById(1);
+		assertNotNull(s);
+	}
+	
+	@Test
+	public void updateTest() {
+		ReimbStatus s = new ReimbStatus(1, "pending");
+		assertNotEquals(0, rsd.update(s));
+	}
+	
+	@Test
+	public void findByNameTest() {
+		ReimbStatus s = rsd.findByName("pending");
+		assertEquals(new ReimbStatus(1, "pending"), s);
+	}
+	
 }
