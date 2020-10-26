@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('stop server') {
-            steps {
-                sh 'sh /home/ec2-user/apache-tomcat-9.0.39/bin/shutdown.sh'
-            }
-        }
         stage('clean') {
             steps {
                 sh 'mvn clean'
