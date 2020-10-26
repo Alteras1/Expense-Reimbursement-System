@@ -1,22 +1,13 @@
 package com.reimb.util;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.anyInt;
-
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.mockito.Mockito;
-
 import com.reim.repo.ReimbDao;
-import com.reim.repo.ReimbStatusDao;
-import com.reim.repo.ReimbTypeDao;
-import com.reim.repo.UserDao;
-import com.reim.repo.UserRoleDao;
 import com.reimb.model.Reimb;
 import com.reimb.model.ReimbStatus;
 import com.reimb.model.ReimbType;
@@ -26,18 +17,10 @@ import com.reimb.model.UserRole;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReimbDaoTest {
 
-	private ReimbStatusDao rsd;
-	private ReimbTypeDao rtd;
-	private UserRoleDao urd;
-	private UserDao ud;
 	private ReimbDao rd;
 
 	@Before
 	public void setUp() throws Exception {
-		rsd = Mockito.mock(ReimbStatusDao.class);
-		rtd = Mockito.mock(ReimbTypeDao.class);
-		urd = Mockito.mock(UserRoleDao.class);
-		ud = Mockito.mock(UserDao.class);
 		rd = new ReimbDao();
 	}
 

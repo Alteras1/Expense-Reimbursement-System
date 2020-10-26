@@ -180,7 +180,6 @@ public class UserDao implements DaoContract<User, Integer> {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, u);
 			ResultSet rs = ps.executeQuery();
-			UserRoleDao urd = new UserRoleDao();
 			if (rs.next()) {
 				avail = rs.getBoolean(1);
 			}

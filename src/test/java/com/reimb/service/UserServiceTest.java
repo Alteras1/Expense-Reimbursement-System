@@ -1,6 +1,7 @@
 package com.reimb.service;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.anyInt;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -9,6 +10,7 @@ import org.junit.runners.MethodSorters;
 import org.mockito.Mockito;
 
 import com.reim.repo.UserDao;
+import com.reim.repo.UserRoleDao;
 import com.reimb.model.User;
 import com.reimb.model.UserRole;
 
@@ -17,11 +19,13 @@ public class UserServiceTest {
 	
 	private UserService us;
 	private UserDao ud;
+	private UserRoleDao urd;
 
 	@Before
 	public void setUp() throws Exception {
-		us = new UserService();
 		ud = Mockito.mock(UserDao.class);
+		urd = Mockito.mock(UserRoleDao.class);
+		us = new UserService(ud, urd);
 	}
 
 	@Test
@@ -53,12 +57,14 @@ public class UserServiceTest {
 	public void CCCdeleteUserTest() {
 		User u = us.verify("jtest", "jtest");
 		User r = new User(1, "jtest", "jtest", "testname", "lastname", "jtestemail", new UserRole(2, "manager"));
+		Mockito.when(ud.delete(anyInt())).thenReturn(1);
 		assertTrue(us.deleteUser(u, r));
 	}
 	
 	@Test
 	public void verifyTest() {
 		User u = new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail", new UserRole(2, "manager"));
+		Mockito.when(ud.findByUsernamePassword("admin", "admin")).thenReturn(u);
 		assertEquals(u, us.verify("admin", "admin"));
 	}
 	
