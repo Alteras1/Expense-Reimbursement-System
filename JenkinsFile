@@ -17,10 +17,5 @@ pipeline {
         		sh 'cp /home/ec2-user/.jenkins/workspace/Reimbursement/target/Project1-0.0.1-SNAPSHOT.war /home/ec2-user/apache-tomcat-9.0.39/webapps'
         	}
         }
-        stage('start server') {
-            steps {
-                sh 'sh /home/ec2-user/apache-tomcat-9.0.39/bin/startup.sh'
-            }
-        }
     }
 }
