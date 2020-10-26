@@ -73,4 +73,9 @@ public class UserDaoTest {
 		User u = new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail", new UserRole(2, "manager"));
 		assertEquals(u, ud.findByUsernamePassword("admin", "admin"));
 	}
+	
+	@Test
+	public void findUsernameAvailabilityTest() {
+		assertFalse(ud.findUsernameAvailability("admin"));
+	}
 }

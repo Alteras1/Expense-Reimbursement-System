@@ -172,5 +172,25 @@ public class UserDao implements DaoContract<User, Integer> {
 		}
 		return user;
 	}
+	
+	public boolean findUsernameAvailability(String u) {
+		boolean avail = false;
+		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {
+			String sql = "select * from usernameAvailability(?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, u);
+			ResultSet rs = ps.executeQuery();
+			UserRoleDao urd = new UserRoleDao();
+			if (rs.next()) {
+				avail = rs.getBoolean(1);
+			}
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return avail;
+	}
 
 }

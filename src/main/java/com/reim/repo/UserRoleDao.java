@@ -90,7 +90,7 @@ public class UserRoleDao implements DaoContract<UserRole, Integer> {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				role = new UserRole(rs.getInt(1), rs.getString(2));
-				System.out.println(role);
+				//System.out.println(role);
 			}
 			rs.close();
 			ps.close();
