@@ -4,6 +4,11 @@
   <artifactId>Project1</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
+  <name>Reimbursement</name>
+  
+  <build>
+  	<finalName>${project.name}</finalName>
+  </build>
   
   <properties>
   		<maven.compiler.source>1.8</maven.compiler.source>
