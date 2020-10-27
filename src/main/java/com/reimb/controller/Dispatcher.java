@@ -36,8 +36,10 @@ public class Dispatcher {
 			
 			break;
 		case "/status":			//view statuses
+			reimbController.status(request, response);
 			break;
 		case "/type":			//view types
+			reimbController.type(request, response);
 			break;
 		case "/reimbVerify":	//approve/deny reimb
 			break;
@@ -49,6 +51,7 @@ public class Dispatcher {
 			}
 			break;
 		case "/user/new":		//create new user
+			userController.create(request, response);
 			break;
 		case "/user/avail":		//check username availability
 			break;
