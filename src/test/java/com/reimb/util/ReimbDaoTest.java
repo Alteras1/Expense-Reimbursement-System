@@ -32,7 +32,7 @@ public class ReimbDaoTest {
 	
 	@Test
 	public void findById() {
-		String s = "Reimb [reimbId=1, amount=20.0, submitted=2020-10-25, resolved=null, description=null, author=User [userId=2, username=test, password=0e7d43b3253e8f5ddceb9a07d1edfa52, firstName=firstname, lastName=lastname, email=email, role=UserRole [roleId=1, role=employee]], resolver=null, status=ReimbStatus [statusId=1, status=pending], type=ReimbType [typeId=1, type=lodging]]";
+		String s = "Reimb [reimbId=1, amount=20.0, submitted=2020-10-26, resolved=null, description=null, author=User [userId=2, username=test, password=0e7d43b3253e8f5ddceb9a07d1edfa52, firstName=firstname, lastName=lastname, email=email, role=UserRole [roleId=1, role=employee]], resolver=null, status=ReimbStatus [statusId=1, status=pending], type=ReimbType [typeId=1, type=lodging]]";
 		assertEquals(s, rd.findById(1).toString());
 	}
 	
@@ -52,7 +52,6 @@ public class ReimbDaoTest {
 	@Test
 	public void CCCdeleteTest() {
 		List<Reimb> reimb = rd.findAll();
-		System.out.println(reimb.get(reimb.size() - 1).getReimbId());
 		assertNotEquals(0, rd.delete(reimb.get(reimb.size() - 1).getReimbId()));
 	}
 	
