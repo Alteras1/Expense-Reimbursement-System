@@ -30,10 +30,12 @@ import com.reimb.model.ReimbType;
 import com.reimb.model.User;
 import com.reimb.model.UserRole;
 import com.reimb.service.ReimbService;
+import com.reimb.service.UserService;
 
 public class ReimbControllerTest {
 
 	private ReimbService rs;
+	private UserService us;
 	private HttpServletRequest req;
 	private HttpServletResponse res;
 	private HttpSession ses;
@@ -41,6 +43,7 @@ public class ReimbControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		rs = Mockito.mock(ReimbService.class);
+		us = Mockito.mock(UserService.class);
 		req = mock(HttpServletRequest.class);
 		res = mock(HttpServletResponse.class);
 		ses = mock(HttpSession.class);
@@ -48,7 +51,7 @@ public class ReimbControllerTest {
 
 	@Test
 	public void getUserTest() {
-		ReimbController rc = new ReimbController(rs);
+		ReimbController rc = new ReimbController(rs, us);
 		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		StringWriter stringWriter = new StringWriter();
@@ -81,7 +84,7 @@ public class ReimbControllerTest {
 	
 	@Test
 	public void updateTest() {
-		ReimbController rc = new ReimbController(rs);
+		ReimbController rc = new ReimbController(rs, us);
 		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		when(ses.getAttribute("User")).thenReturn(manager);
@@ -118,7 +121,7 @@ public class ReimbControllerTest {
 	
 	@Test
 	public void deleteTest() {
-		ReimbController rc = new ReimbController(rs);
+		ReimbController rc = new ReimbController(rs, us);
 		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		when(ses.getAttribute("User")).thenReturn(manager);
@@ -155,7 +158,7 @@ public class ReimbControllerTest {
 	
 	@Test
 	public void verifyTest() {
-		ReimbController rc = new ReimbController(rs);
+		ReimbController rc = new ReimbController(rs, us);
 		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		when(ses.getAttribute("User")).thenReturn(manager);
@@ -197,7 +200,7 @@ public class ReimbControllerTest {
 	
 	@Test
 	public void viewByIdTest() {
-		ReimbController rc = new ReimbController(rs);
+		ReimbController rc = new ReimbController(rs, us);
 		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		when(req.getPathInfo()).thenReturn("/reimb/id/1");
@@ -232,20 +235,15 @@ public class ReimbControllerTest {
 	
 	@Test
 	public void viewByAuthorTest() {
-		ReimbController rc = new ReimbController(rs);
+		ReimbController rc = new ReimbController(rs, us);
 		ObjectMapper om = new ObjectMapper();
 		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		when(ses.getAttribute("User")).thenReturn(manager);
-		try {
-			when(req.getParameter("author")).thenReturn(om.writeValueAsString(manager));
-		} catch (JsonProcessingException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+		when(req.getPathInfo()).thenReturn("/reimb/author/1");
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
-		
+		when(us.findById(1)).thenReturn(manager);
 		String reimbList = "";
 		List<Reimb> reimbs = new LinkedList<Reimb>();
 		reimbs.add(new Reimb(1,20.0, "desc", manager, new ReimbStatus(1, "pending"), new ReimbType(1, "lodging")));

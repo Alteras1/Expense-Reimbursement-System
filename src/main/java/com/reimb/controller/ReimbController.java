@@ -14,18 +14,22 @@ import com.reimb.model.ReimbStatus;
 import com.reimb.model.ReimbType;
 import com.reimb.model.User;
 import com.reimb.service.ReimbService;
+import com.reimb.service.UserService;
 
 public class ReimbController {
 	
 	private ReimbService reimbService;
+	private UserService userService;
 	private ObjectMapper om = new ObjectMapper();
 
 	public ReimbController() {
 		reimbService = new ReimbService();
+		userService = new UserService();
 	}
 	
-	public ReimbController(ReimbService rs) {
+	public ReimbController(ReimbService rs, UserService us) {
 		reimbService = rs;
+		userService = us;
 	}
 
 	public void status(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -126,10 +130,16 @@ public class ReimbController {
 	
 	public void viewByAuthor(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession ses = req.getSession(false);
-		String author = req.getParameter("author");
-		if (ses != null && !author.isEmpty()) {
+		int id = 0;
+		try {
+			id = Integer.parseInt(req.getPathInfo().split("/")[3]);
+		} catch (NumberFormatException e) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		}
+		User author = userService.findById(id);
+		if (ses != null && author != null) {
 			User requester = (User) ses.getAttribute("User");
-			List<Reimb> foundReimbs = reimbService.findByAuthor(om.readValue(author, User.class), requester);
+			List<Reimb> foundReimbs = reimbService.findByAuthor(author, requester);
 			res.setContentType("application/json");
 			res.getWriter().write(om.writeValueAsString(foundReimbs));
 			res.getWriter().close();

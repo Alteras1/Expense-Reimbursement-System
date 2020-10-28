@@ -50,13 +50,12 @@ public class LoginController {
 		if (session == null) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			res.setContentType("text/plain");
-			res.getWriter().write("There was no user logged into the session");
+			res.getWriter().write("false");
 			res.getWriter().close();
 		} else {
-			User user = (User) session.getAttribute("User");
 			session.invalidate();
 			res.setContentType("text/plain");
-			res.getWriter().write("You have successfully logged out of " + user.getFirstName() + " " + user.getLastName());
+			res.getWriter().write("true");
 			res.getWriter().close();
 		}
 	}

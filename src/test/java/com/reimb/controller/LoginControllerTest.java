@@ -62,7 +62,6 @@ public class LoginControllerTest {
 		LoginController ls = new LoginController(us);
 		ses.setAttribute("User", new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager")));
 		when(req.getSession(false)).thenReturn(ses);
-		when(ses.getAttribute("User")).thenReturn(new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager")));
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
 		try {
@@ -76,7 +75,7 @@ public class LoginControllerTest {
 			e.printStackTrace();
 		}
 		writer.flush();
-		assertEquals("You have successfully logged out of first last", stringWriter.toString());
+		assertEquals("true", stringWriter.toString());
 		stringWriter.flush();
 	}
 	

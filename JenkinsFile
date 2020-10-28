@@ -9,7 +9,7 @@ pipeline {
         }
         stage('package') {
             steps {
-                sh 'mvn package -DskipTests'
+                sh 'mvn package -Dmaven.test.failure.ignore=true'
             }
         }
         stage('deploy'){
