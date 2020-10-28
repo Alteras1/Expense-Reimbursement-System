@@ -29,4 +29,8 @@
     <servlet-name>MainPage</servlet-name>
     <url-pattern>/main</url-pattern>
   </servlet-mapping>
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/main</location>
+  </error-page>
 </web-app>

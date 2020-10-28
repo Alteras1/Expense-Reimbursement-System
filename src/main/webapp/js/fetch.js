@@ -1,11 +1,14 @@
 async function asyncFetch(
   url,
+  expression,
   body = {
     method: "GET",
-  },
-  expression
+  }
 ) {
-  const response = await fetch(url, body);
+  const response = await fetch(api + url, body);
   const json = await response.json();
+  console.log(json);
   expression(json);
 }
+
+var api = "/Reimbursement/api";

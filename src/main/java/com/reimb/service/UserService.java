@@ -58,4 +58,8 @@ public class UserService {
 		return false;
 	}
 	
+	public User findById(int i) {
+		return ud.findById(i);
+	}
+	
 }

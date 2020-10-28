@@ -1,7 +1,6 @@
 package com.reimb.service;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.anyInt;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -55,9 +54,9 @@ public class UserServiceTest {
 	
 	@Test
 	public void CCCdeleteUserTest() {
-		User u = us.verify("jtest", "jtest");
+		User u = new User(0, "jtest", "jtest", "testname", "lastname", "jtestemail", new UserRole(1, "employee"));
 		User r = new User(1, "jtest", "jtest", "testname", "lastname", "jtestemail", new UserRole(2, "manager"));
-		Mockito.when(ud.delete(anyInt())).thenReturn(1);
+		Mockito.when(ud.delete(u.getUserId())).thenReturn(1);
 		assertTrue(us.deleteUser(u, r));
 	}
 	
