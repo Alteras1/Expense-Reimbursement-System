@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.LinkedBlockingDeque;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -35,9 +34,9 @@ import com.reimb.service.ReimbService;
 public class ReimbControllerTest {
 
 	private ReimbService rs;
-	HttpServletRequest req;
-	HttpServletResponse res;
-	HttpSession ses;
+	private HttpServletRequest req;
+	private HttpServletResponse res;
+	private HttpSession ses;
 	
 	@Before
 	public void setUp() throws Exception {

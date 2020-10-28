@@ -25,9 +25,9 @@ import com.reimb.service.UserService;
 public class LoginControllerTest {
 
 	private UserService us;
-	HttpServletRequest req;
-	HttpServletResponse res;
-	HttpSession ses;
+	private HttpServletRequest req;
+	private HttpServletResponse res;
+	private HttpSession ses;
 	
 	@Before
 	public void setUp() throws Exception {

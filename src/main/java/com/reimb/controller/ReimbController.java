@@ -18,6 +18,7 @@ import com.reimb.service.ReimbService;
 public class ReimbController {
 	
 	private ReimbService reimbService;
+	private ObjectMapper om = new ObjectMapper();
 
 	public ReimbController() {
 		reimbService = new ReimbService();
@@ -28,7 +29,6 @@ public class ReimbController {
 	}
 
 	public void status(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
 		List<ReimbStatus> statuses = reimbService.findAllStatus();
 		res.setContentType("application/json");
 		res.getWriter().write(om.writeValueAsString(statuses));
@@ -36,7 +36,6 @@ public class ReimbController {
 	}
 	
 	public void type(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
 		List<ReimbType> types = reimbService.findAllType();
 		res.setContentType("application/json");
 		res.getWriter().write(om.writeValueAsString(types));
@@ -44,7 +43,6 @@ public class ReimbController {
 	}
 	
 	public void viewAll(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
 		List<Reimb> statuses = reimbService.findAll();
 		res.setContentType("application/json");
 		res.getWriter().write(om.writeValueAsString(statuses));
@@ -52,7 +50,6 @@ public class ReimbController {
 	}
 	
 	public void newReimb(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
 		if (req.getSession(false) != null) {
 			Reimb newReimb = om.readValue(req.getReader(), Reimb.class);
 			Boolean success = reimbService.create(newReimb);
@@ -65,7 +62,6 @@ public class ReimbController {
 	}
 	
 	public void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
 		HttpSession ses = req.getSession(false);
 		if (ses != null) {
 			User currentUser = (User) ses.getAttribute("User");
@@ -80,7 +76,6 @@ public class ReimbController {
 	}
 	
 	public void delete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
 		HttpSession ses = req.getSession(false);
 		if (ses != null) {
 			User currentUser = (User) ses.getAttribute("User");
@@ -95,7 +90,6 @@ public class ReimbController {
 	}
 	
 	public void verify(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
 		HttpSession ses = req.getSession(false);
 		if (ses != null) {
 			User currentUser = (User) ses.getAttribute("User");
@@ -113,7 +107,6 @@ public class ReimbController {
 	}
 	
 	public void viewById(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
 		HttpSession ses = req.getSession(false);
 		int id = 0;
 		try {
@@ -132,7 +125,6 @@ public class ReimbController {
 	}
 	
 	public void viewByAuthor(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ObjectMapper om = new ObjectMapper();
 		HttpSession ses = req.getSession(false);
 		String author = req.getParameter("author");
 		if (ses != null && !author.isEmpty()) {

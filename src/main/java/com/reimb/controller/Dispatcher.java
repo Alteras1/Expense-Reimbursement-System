@@ -74,10 +74,12 @@ public class Dispatcher {
 			userController.create(request, response);
 			break;
 		case "/user/avail":		//check username availability
+			userController = new UserController();
+			userController.checkUsername(request, response);
 			break;
 		case "/reimb/author":	//view by author
 			reimbController = new ReimbController();
-			if (request.getMethod().equals("POST")) reimbController.viewByAuthor(request, response);
+			if (request.getMethod().equals("GET")) reimbController.viewByAuthor(request, response);
 			break;
 		default: {				//special endpoint
 			if (path.split("/").length == 4) {
