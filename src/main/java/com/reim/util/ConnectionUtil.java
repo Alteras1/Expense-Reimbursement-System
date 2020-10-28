@@ -31,7 +31,6 @@ public class ConnectionUtil {
 	}
 
 	public Connection getConnection() throws SQLException {
-		System.out.println(System.getProperties());
 		return DriverManager.getConnection(url, username, password);
 	}
 
