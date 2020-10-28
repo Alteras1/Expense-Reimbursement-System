@@ -4,6 +4,10 @@ public class ReimbStatus {
 	private int statusId;
 	private String status;
 
+	public ReimbStatus() {
+		super();
+	}
+
 	public ReimbStatus(int statusId, String status) {
 		super();
 		this.statusId = statusId;

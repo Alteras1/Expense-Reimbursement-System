@@ -3,6 +3,9 @@ package com.reimb.model;
 public class UserRole {
 	private int roleId;
 	private String role;
+	public UserRole() {
+		super();
+	}
 	public UserRole(int roleId, String role) {
 		super();
 		this.roleId = roleId;

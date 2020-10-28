@@ -13,6 +13,9 @@ public class Reimb {
 	private ReimbStatus status;
 	private ReimbType type;
 	
+	public Reimb() {
+		super();
+	}
 	public Reimb(double amount, String description, User author, ReimbStatus status, ReimbType type) {
 		super();
 		this.reimbId = 0;

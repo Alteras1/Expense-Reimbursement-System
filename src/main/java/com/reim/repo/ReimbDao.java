@@ -101,7 +101,6 @@ public class ReimbDao implements DaoContract<Reimb, Integer> {
 			ps.setInt(6, t.getType().getTypeId());
 			ps.setInt(7, t.getReimbId());
 			count = ps.executeUpdate();
-
 			ps.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -118,9 +117,13 @@ public class ReimbDao implements DaoContract<Reimb, Integer> {
 			pc.setInt(1, id);
 			pc.setInt(2, rs.getStatusId());
 			pc.setInt(3, resolver.getUserId());
-			count = pc.executeUpdate();
-			count = 1;
+			ResultSet rs1 = pc.executeQuery();
+			rs1.next();
+			count = (rs1.getInt(1) == 1) ? 1 : 0;
+			//count = pc.getUpdateCount();/
+			System.out.print(count);
 			pc.close();
+			rs1.close();
 		} catch (SQLException e) {
 			count = 0;
 			e.printStackTrace();
@@ -141,7 +144,6 @@ public class ReimbDao implements DaoContract<Reimb, Integer> {
 			ps.setInt(4, t.getStatus().getStatusId());
 			ps.setInt(5, t.getType().getTypeId());
 			count = ps.executeUpdate();
-
 			ps.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
