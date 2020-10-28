@@ -161,7 +161,6 @@ public class UserControllerTest {
 	public void checkUsernameTest() {
 		UserController uc = new UserController(us);
 		when(req.getParameter("username")).thenReturn("username");
-		ObjectMapper om = new ObjectMapper();
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
 		try {
