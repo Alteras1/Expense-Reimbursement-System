@@ -4,6 +4,9 @@ public class ReimbType {
 
 	private int typeId;
 	private String type;
+	public ReimbType() {
+		super();
+	}
 	public ReimbType(int typeId, String type) {
 		super();
 		this.typeId = typeId;

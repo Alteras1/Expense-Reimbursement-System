@@ -18,6 +18,10 @@ public class LoginController {
 		userService = new UserService();
 	}
 	
+	public LoginController(UserService us) {
+		userService = us;
+	}
+	
 	public void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		if (!req.getMethod().equals("POST")) {
 			res.sendRedirect(req.getContextPath() + "/login.html");
