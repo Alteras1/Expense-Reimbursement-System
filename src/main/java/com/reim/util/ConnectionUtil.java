@@ -13,6 +13,8 @@ public class ConnectionUtil {
 		}
 	}
 	
+	
+	
 	private String url = System.getenv("aws_url");
 	private String password = System.getenv("aws_password");
 	private String username = System.getenv("aws_username");
@@ -29,6 +31,7 @@ public class ConnectionUtil {
 	}
 
 	public Connection getConnection() throws SQLException {
+		System.out.println(System.getenv());
 		return DriverManager.getConnection(url, username, password);
 	}
 
