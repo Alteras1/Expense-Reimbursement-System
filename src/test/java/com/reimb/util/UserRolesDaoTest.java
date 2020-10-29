@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.reim.repo.UserRoleDao;
 import com.reimb.model.UserRole;
+import com.reimb.repo.UserRoleDao;
 
 public class UserRolesDaoTest {
 

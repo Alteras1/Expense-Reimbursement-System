@@ -1,4 +1,4 @@
-package com.reim.repo;
+package com.reimb.repo;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -10,12 +10,12 @@ import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.reim.util.ConnectionUtil;
 import com.reimb.model.Reimb;
 import com.reimb.model.ReimbStatus;
 import com.reimb.model.ReimbType;
 import com.reimb.model.User;
 import com.reimb.model.UserRole;
+import com.reimb.util.ConnectionUtil;
 
 public class ReimbDao implements DaoContract<Reimb, Integer> {
 

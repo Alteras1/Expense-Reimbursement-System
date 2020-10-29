@@ -8,10 +8,10 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.mockito.Mockito;
 
-import com.reim.repo.UserDao;
-import com.reim.repo.UserRoleDao;
 import com.reimb.model.User;
 import com.reimb.model.UserRole;
+import com.reimb.repo.UserDao;
+import com.reimb.repo.UserRoleDao;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserServiceTest {

@@ -1,4 +1,4 @@
-package com.reim.repo;
+package com.reimb.repo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,8 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.reim.util.ConnectionUtil;
 import com.reimb.model.User;
+import com.reimb.util.ConnectionUtil;
 
 public class UserDao implements DaoContract<User, Integer> {
 

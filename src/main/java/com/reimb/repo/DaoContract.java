@@ -1,4 +1,4 @@
-package com.reim.repo;
+package com.reimb.repo;
 
 import java.util.List;
 

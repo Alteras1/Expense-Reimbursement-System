@@ -1,4 +1,4 @@
-package com.reim.util;
+package com.reimb.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

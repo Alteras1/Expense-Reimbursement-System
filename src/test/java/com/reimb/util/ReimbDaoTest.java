@@ -7,12 +7,13 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import com.reim.repo.ReimbDao;
+
 import com.reimb.model.Reimb;
 import com.reimb.model.ReimbStatus;
 import com.reimb.model.ReimbType;
 import com.reimb.model.User;
 import com.reimb.model.UserRole;
+import com.reimb.repo.ReimbDao;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReimbDaoTest {

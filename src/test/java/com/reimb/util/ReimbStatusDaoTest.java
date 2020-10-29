@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.reim.repo.ReimbStatusDao;
 import com.reimb.model.ReimbStatus;
+import com.reimb.repo.ReimbStatusDao;
 
 public class ReimbStatusDaoTest {
 	

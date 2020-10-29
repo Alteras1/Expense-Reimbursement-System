@@ -1,4 +1,4 @@
-package com.reim.repo;
+package com.reimb.repo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,20 +8,20 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.reim.util.ConnectionUtil;
-import com.reimb.model.UserRole;
+import com.reimb.model.ReimbType;
+import com.reimb.util.ConnectionUtil;
 
-public class UserRoleDao implements DaoContract<UserRole, Integer> {
+public class ReimbTypeDao implements DaoContract<ReimbType, Integer> {
 
 	@Override
-	public List<UserRole> findAll() {
-		List<UserRole> roles = new LinkedList<>();
+	public List<ReimbType> findAll() {
+		List<ReimbType> typees = new LinkedList<>();
 		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {
 			Statement s = conn.createStatement();
-			String sql = "select * from ers_user_roles";
+			String sql = "select * from ers_reimbursement_type";
 			ResultSet rs = s.executeQuery(sql);
 			while (rs.next()) {
-				roles.add(new UserRole(rs.getInt(1), rs.getString(2)));
+				typees.add(new ReimbType(rs.getInt(1), rs.getString(2)));
 			}
 			rs.close();
 			s.close();
@@ -29,19 +29,19 @@ public class UserRoleDao implements DaoContract<UserRole, Integer> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return roles;
+		return typees;
 	}
 
 	@Override
-	public UserRole findById(Integer i) {
-		UserRole role = null;
+	public ReimbType findById(Integer i) {
+		ReimbType type = null;
 		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {
-			String sql = "select * from ers_user_roles where ers_user_role_id = ?";
+			String sql = "select * from ers_reimbursement_type where reimb_type_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, i);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				role = new UserRole(rs.getInt(1), rs.getString(2));
+				type = new ReimbType(rs.getInt(1), rs.getString(2));
 			}
 			rs.close();
 			ps.close();
@@ -49,17 +49,17 @@ public class UserRoleDao implements DaoContract<UserRole, Integer> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return role;
+		return type;
 	}
 
 	@Override
-	public int update(UserRole t) {
+	public int update(ReimbType t) {
 		int count = 0;
 		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {
-			String sql = "update ers_user_roles set user_role = ? where ers_user_role_id = ?";
+			String sql = "update ers_reimbursement_type set reimb_type = ? where reimb_type_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, t.getRole());
-			ps.setInt(2, t.getRoleId());
+			ps.setString(1, t.getType());
+			ps.setInt(2, t.getTypeId());
 			count = ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -69,7 +69,7 @@ public class UserRoleDao implements DaoContract<UserRole, Integer> {
 	}
 
 	@Override
-	public int create(UserRole t) {
+	public int create(ReimbType t) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -81,16 +81,16 @@ public class UserRoleDao implements DaoContract<UserRole, Integer> {
 	}
 
 	@Override
-	public UserRole findByName(String name) {
-		UserRole role = null;
+	public ReimbType findByName(String name) {
+		ReimbType type = null;
 		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {
-			String sql = "select * from ers_user_roles where user_role = ?";
+			String sql = "select * from ers_reimbursement_type where reimb_type = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, name);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				role = new UserRole(rs.getInt(1), rs.getString(2));
-				//System.out.println(role);
+				type = new ReimbType(rs.getInt(1), rs.getString(2));
+				System.out.println(type);
 			}
 			rs.close();
 			ps.close();
@@ -98,7 +98,7 @@ public class UserRoleDao implements DaoContract<UserRole, Integer> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return role;
+		return type;
 	}
 
 

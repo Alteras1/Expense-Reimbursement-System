@@ -2,10 +2,10 @@ package com.reimb.service;
 
 import java.util.List;
 
-import com.reim.repo.UserDao;
-import com.reim.repo.UserRoleDao;
 import com.reimb.model.User;
 import com.reimb.model.UserRole;
+import com.reimb.repo.UserDao;
+import com.reimb.repo.UserRoleDao;
 
 public class UserService {
 	
