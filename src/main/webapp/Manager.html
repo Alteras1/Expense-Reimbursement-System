@@ -18,105 +18,146 @@
 </head>
 
 <body>
-	<h1>Manager</h1>
+	<div class="container-xl">
+		<h1>Manager</h1>
 
-	<a href="/Reimbursement/Employee.html">Employee</a>
-	<a href="/Reimbursement/logout.html">Logout</a>
+		<a href="/Reimbursement/Employee.html">Employee</a>
+		<a href="/Reimbursement/logout.html">Logout</a>
 
-	<h2>Welcome <span id="currentUser">{User}</span></h2>
+		<h2>Welcome <span id="currentUser">{User}</span></h2>
 
-	<div>Filter by:</div>
-	<form id="filter">
-		<select id="filterType" class="form-control type text-capitalize" name="filterType">
-			<option value="0">Type</option>
-		</select>
-		<select id="filterStatus" class="form-control status text-capitalize" name="filterStatus">
-			<option value="0">Status</option>
-		</select>
-		<button type="submit">Filter</button>
-	</form>
+		<div class="card mb-3">
+			<div class="card-header">
+				<div class="d-flex flex-row justify-content-between">
+					<h2 class="mb-0">Reimbursement Claims</h2>
+					<form id="filter" class="form-inline p-0">
 
-	<table class="table table-sm">
-		<thead class="thead-dark">
-			<tr>
-				<th scope="col">#</th>
-				<th scope="col">Author</th>
-				<th scope="col">Amount</th>
-				<th scope="col">Description</th>
-				<th scope="col">Submitted</th>
-				<th scope="col">Type</th>
-				<th scope="col">Status</th>
-				<th scope="col">Resolved</th>
-				<th scope="col">Resolver</th>
-			</tr>
-		</thead>
-		<tbody id="reimbRows">
-		</tbody>
-	</table>
-
-	<form id="viewClaim">
-		<label for="reimbId">Claim #</label>
-		<input type="number" class="form-control" id="reimbId" placeholder="Claim #" name="reimbId" required />
-		<button type="submit" class="btn btn-primary">View Claim</button>
-	</form>
-
-	<div class="card" id="reimbCase">
-		<div class="card-header">
-			Reimbursement Claim <span id="claimId"></span>
+						<label class="mr-sm-2">Filter by:</label>
+						<select id="filterType" class="form-control type text-capitalize custom-select mr-sm-2"
+							name="filterType">
+							<option value="0">Type</option>
+						</select>
+						<select id="filterStatus" class="form-control status text-capitalize custom-select mr-sm-2"
+							name="filterStatus">
+							<option value="0">Status</option>
+						</select>
+						<button type="submit" class="btn btn-primary">Filter</button>
+					</form>
+				</div>
+			</div>
+			<div class="card-body p-0">
+				<table class="table table-sm">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Author</th>
+							<th scope="col">Amount</th>
+							<th scope="col">Description</th>
+							<th scope="col">Submitted</th>
+							<th scope="col">Type</th>
+							<th scope="col">Status</th>
+							<th scope="col">Resolved</th>
+							<th scope="col">Resolver</th>
+						</tr>
+					</thead>
+					<tbody id="reimbRows" style="max-height: 800px; overflow-y: auto;">
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item" id="claimAuthor">Author</li>
-			<li class="list-group-item" id="claimAmount">Amount</li>
-			<li class="list-group-item" id="claimSubmitted">Submitted</li>
-		</ul>
-		<div class="card-body">
-			<p class="card-text" id="claimDescription"></p>
+
+		<div class="row">
+			<div class="col">
+				<div class="card" id="reimbCase">
+					<div class="card-header">
+						Reimbursement Claim <span id="claimId"></span>
+					</div>
+					<div class="card-body">
+						<form id="viewClaim" class="form-inline">
+							<label for="reimbId" class="mr-2">Claim #</label>
+							<input type="number" class="form-control mr-2" id="reimbId" placeholder="Claim #"
+								name="reimbId" required />
+
+							<button type="submit" class="btn btn-primary">View Claim</button>
+
+						</form>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">Author</li>
+						<li class="list-group-item" id="claimAuthor"></li>
+						<li class="list-group-item">Amount</li>
+						<li class="list-group-item" id="claimAmount"></li>
+						<li class="list-group-item">Submitted</li>
+						<li class="list-group-item" id="claimSubmitted"></li>
+						<li class="list-group-item">Description</li>
+					</ul>
+					<div class="card-body">
+						<p class="card-text" id="claimDescription"></p>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">Status</li>
+						<li class="list-group-item" id="claimStatus"></li>
+					</ul>
+					<div class="card-body">
+						<select id="claimUpdate" class="form-control status text-capitalize custom-select"
+							name="approval">
+						</select>
+						<button type="submit" class="btn btn-primary" id="updateSubmit">Update</button>
+					</div>
+
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<div class="card-header">New Account</div>
+					<div class="card-body">
+						<form id="account">
+							<div class="form-group">
+								<label for="firstName">First Name</label>
+								<input type="text" class="form-control" id="firstName" placeholder="First Name"
+									name="firstName" required />
+							</div>
+							<div class="form-group">
+								<label for="lastName">Last Name</label>
+								<input type="text" class="form-control" id="lastName" placeholder="Last Name"
+									name="lastName" required />
+							</div>
+							<div class="form-group">
+								<label for="email">Email</label>
+								<input type="email" class="form-control" id="email" placeholder="Email" name="email"
+									required />
+							</div>
+							<div class="form-group">
+								<label for="username">Username</label>
+								<input type="text" class="form-control" id="username" placeholder="Username"
+									name="username" required />
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input type="password" class="form-control" id="password" placeholder="Password"
+									name="password" required />
+							</div>
+							<div class="form-group">
+								<label for="role">Role</label>
+								<select id="claimUpdate" class="form-control text-capitalize custom-select" name="role">
+									<option value="1" selected>Employee</option>
+									<option value="2">Manager</option>
+								</select>
+							</div>
+							<button type="submit" id="createSubmit" class="btn btn-primary">
+								Create
+							</button>
+							<div id="createStatus"></div>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item" id="claimStatus">Status</li>
-		</ul>
-		<div class="card-body">
-			<select id="claimUpdate" class="form-control status text-capitalize" name="approval">
-			</select>
-			<button type="submit" class="btn btn-primary" id="updateSubmit">Update</button>
-		</div>
+
+
 
 	</div>
 
-	<h3>New Account</h3>
-	<form id="account">
-		<div class="form-group">
-			<label for="firstName">First Name</label>
-			<input type="text" class="form-control" id="firstName" placeholder="First Name" name="firstName" required />
-		</div>
-		<div class="form-group">
-			<label for="lastName">Last Name</label>
-			<input type="text" class="form-control" id="lastName" placeholder="Last Name" name="lastName" required />
-		</div>
-		<div class="form-group">
-			<label for="email">Email</label>
-			<input type="email" class="form-control" id="email" placeholder="Email" name="email" required />
-		</div>
-		<div class="form-group">
-			<label for="username">Username</label>
-			<input type="text" class="form-control" id="username" placeholder="Username" name="username" required />
-		</div>
-		<div class="form-group">
-			<label for="password">Password</label>
-			<input type="password" class="form-control" id="password" placeholder="Password" name="password" required />
-		</div>
-		<div class="form-group">
-			<label for="role">Role</label>
-			<select id="claimUpdate" class="form-control text-capitalize" name="role">
-				<option value="1" selected>Employee</option>
-				<option value="2">Manager</option>
-			</select>
-		</div>
-		<button type="submit" id="createSubmit" class="btn btn-primary">
-			Create
-		</button>
-		<div id="createStatus"></div>
-	</form>
 
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
