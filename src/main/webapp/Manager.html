@@ -13,8 +13,8 @@
 	<title>Reimbursement</title>
 	<script defer type="text/javascript" src="./js/fetch.js"></script>
 	<script defer type="text/javascript" src="./js/setup.js"></script>
-	<script defer type="text/javascript" src="./js/reimbFunction.js"></script>
 	<script defer type="text/javascript" src="./js/managerFunctions.js"></script>
+	<script type="text/javascript" src="./js/populate.js"></script>
 </head>
 
 <body>
@@ -25,52 +25,99 @@
 
 	<h2>Welcome <span id="currentUser">{User}</span></h2>
 
+	<div>Filter by:</div>
+	<form id="filter">
+		<select id="filterType" class="form-control type text-capitalize" name="filterType">
+			<option value="0">Type</option>
+		</select>
+		<select id="filterStatus" class="form-control status text-capitalize" name="filterStatus">
+			<option value="0">Status</option>
+		</select>
+		<button type="submit">Filter</button>
+	</form>
+
 	<table class="table table-sm">
 		<thead class="thead-dark">
 			<tr>
 				<th scope="col">#</th>
-				<th scope="col">Amount</th>
 				<th scope="col">Author</th>
+				<th scope="col">Amount</th>
 				<th scope="col">Description</th>
 				<th scope="col">Submitted</th>
-				<th scope="col">Status</th>
 				<th scope="col">Type</th>
-				<th scope="col">Resolver</th>
+				<th scope="col">Status</th>
 				<th scope="col">Resolved</th>
+				<th scope="col">Resolver</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">1</th>
-				<td>$20</td>
-				<td>Otto</td>
-				<td>Description</td>
-				<td>Submitted</td>
-				<td>Status</td>
-				<td>Type</td>
-				<td>Resolver</td>
-				<td>Resolved</td>
-			</tr>
+		<tbody id="reimbRows">
 		</tbody>
 	</table>
 
-	<form id="addReimb">
-		<div class="form-group">
-			<label for="amount">Amount</label>
-			<input type="number" class="form-control" id="amount" placeholder="Enter Amount" name="amount" required />
-		</div>
-		<div class="form-group">
-			<label for="type">Type</label>
-			<select id="type" class="form-control type" name="type"></select>
-		</div>
-		<div class="form-group">
-			<label for="description">Description</label>
-			<textarea class="form-control" id="description" rows="3" name="description"></textarea>
-		</div>
-		<button type="submit" class="btn btn-primary">
-			Submit Reimbursement Request
-		</button>
+	<form id="viewClaim">
+		<label for="reimbId">Claim #</label>
+		<input type="number" class="form-control" id="reimbId" placeholder="Claim #" name="reimbId" required />
+		<button type="submit" class="btn btn-primary">View Claim</button>
 	</form>
+
+	<div class="card" id="reimbCase">
+		<div class="card-header">
+			Reimbursement Claim <span id="claimId"></span>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item" id="claimAuthor">Author</li>
+			<li class="list-group-item" id="claimAmount">Amount</li>
+			<li class="list-group-item" id="claimSubmitted">Submitted</li>
+		</ul>
+		<div class="card-body">
+			<p class="card-text" id="claimDescription"></p>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item" id="claimStatus">Status</li>
+		</ul>
+		<div class="card-body">
+			<select id="claimUpdate" class="form-control status text-capitalize" name="approval">
+			</select>
+			<button type="submit" class="btn btn-primary" id="updateSubmit">Update</button>
+		</div>
+
+	</div>
+
+	<h3>New Account</h3>
+	<form id="account">
+		<div class="form-group">
+			<label for="firstName">First Name</label>
+			<input type="text" class="form-control" id="firstName" placeholder="First Name" name="firstName" required />
+		</div>
+		<div class="form-group">
+			<label for="lastName">Last Name</label>
+			<input type="text" class="form-control" id="lastName" placeholder="Last Name" name="lastName" required />
+		</div>
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input type="email" class="form-control" id="email" placeholder="Email" name="email" required />
+		</div>
+		<div class="form-group">
+			<label for="username">Username</label>
+			<input type="text" class="form-control" id="username" placeholder="Username" name="username" required />
+		</div>
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password" class="form-control" id="password" placeholder="Password" name="password" required />
+		</div>
+		<div class="form-group">
+			<label for="role">Role</label>
+			<select id="claimUpdate" class="form-control text-capitalize" name="role">
+				<option value="1" selected>Employee</option>
+				<option value="2">Manager</option>
+			</select>
+		</div>
+		<button type="submit" id="createSubmit" class="btn btn-primary">
+			Create
+		</button>
+		<div id="createStatus"></div>
+	</form>
+
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

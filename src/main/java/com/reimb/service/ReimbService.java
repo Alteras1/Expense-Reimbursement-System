@@ -49,7 +49,7 @@ public class ReimbService {
 	}
 	
 	public boolean changeStatus(Reimb r, ReimbStatus rs, User u) {
-		if (u.getRole().equals(manager) && !(r.getStatus().equals(rs))) {
+		if (u.getRole().equals(manager)) {
 			return (rd.update(r.getReimbId(), rs, u) != 0) ? true : false;
 		}
 		return false;

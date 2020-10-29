@@ -97,11 +97,8 @@ public class ReimbController {
 		HttpSession ses = req.getSession(false);
 		if (ses != null) {
 			User currentUser = (User) ses.getAttribute("User");
-			String reimb = req.getParameter("reimb");
-			String reimbStatus = req.getParameter("status");
-			Reimb newReimb = om.readValue(reimb, Reimb.class);
-			ReimbStatus newReimbStatus = om.readValue(reimbStatus, ReimbStatus.class);
-			Boolean success = reimbService.changeStatus(newReimb, newReimbStatus, currentUser);
+			Reimb newReimb = om.readValue(req.getReader(), Reimb.class);
+			Boolean success = reimbService.changeStatus(newReimb, newReimb.getStatus(), currentUser);
 			res.setContentType("application/json");
 			res.getWriter().write(om.writeValueAsString(success));
 			res.getWriter().close();
