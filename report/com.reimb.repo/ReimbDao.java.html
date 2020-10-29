@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReimbDao.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Reimbursement</a> &gt; <a href="index.source.html" class="el_package">com.reimb.repo</a> &gt; <span class="el_source">ReimbDao.java</span></div><h1>ReimbDao.java</h1><pre class="source lang-java linenums">package com.reimb.repo;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.util.LinkedList;
+import java.util.List;
+
+import com.reimb.model.Reimb;
+import com.reimb.model.ReimbStatus;
+import com.reimb.model.ReimbType;
+import com.reimb.model.User;
+import com.reimb.model.UserRole;
+import com.reimb.util.ConnectionUtil;
+
+<span class="fc" id="L20">public class ReimbDao implements DaoContract&lt;Reimb, Integer&gt; {</span>
+
+	@Override
+	public List&lt;Reimb&gt; findAll() {
+<span class="fc" id="L24">		List&lt;Reimb&gt; reimbs = new LinkedList&lt;Reimb&gt;();</span>
+<span class="fc" id="L25">		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {</span>
+<span class="fc" id="L26">			String sql = &quot;select * from getReimbursement()&quot;;</span>
+<span class="fc" id="L27">			Statement s = conn.createStatement();</span>
+<span class="fc" id="L28">			ResultSet rs = s.executeQuery(sql);</span>
+			//This single SQL function contains all necessary information
+			//to generate every POJO without needing to call a million other
+			//JDBC calls
+			//Sanity was lost the day this method was created
+<span class="fc bfc" id="L33" title="All 2 branches covered.">			while (rs.next()) {</span>
+<span class="fc" id="L34">				User author = new User(rs.getInt(&quot;author_id&quot;), rs.getString(&quot;author_username&quot;), rs.getString(&quot;author_password&quot;), rs.getString(&quot;author_first_name&quot;), </span>
+<span class="fc" id="L35">						rs.getString(&quot;author_last_name&quot;), rs.getString(&quot;author_email&quot;), new UserRole(rs.getInt(&quot;author_role_id&quot;), rs.getString(&quot;author_role&quot;)));</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">				User resolver = (rs.getInt(&quot;resolver_id&quot;) &gt; 0) ? new User(rs.getInt(&quot;resolver_id&quot;), rs.getString(&quot;resolver_username&quot;), rs.getString(&quot;resolver_password&quot;), rs.getString(&quot;resolver_first_name&quot;), </span>
+<span class="pc" id="L37">						rs.getString(&quot;resolver_last_name&quot;), rs.getString(&quot;resolver_email&quot;), new UserRole(rs.getInt(&quot;resolver_role_id&quot;), rs.getString(&quot;resolver_role&quot;))) : null;</span>
+<span class="fc" id="L38">				reimbs.add(new Reimb(rs.getInt(&quot;reimb_id&quot;), rs.getDouble(&quot;reimb_amount&quot;), rs.getDate(&quot;reimb_submitted&quot;), </span>
+<span class="fc" id="L39">						rs.getDate(&quot;reimb_resolved&quot;), rs.getString(&quot;reimb_description&quot;), author, resolver, </span>
+<span class="fc" id="L40">						new ReimbStatus(rs.getInt(&quot;reimb_status_id&quot;), rs.getString(&quot;reimb_status&quot;)), new ReimbType(rs.getInt(&quot;reimb_type_id&quot;), rs.getString(&quot;reimb_type&quot;))));</span>
+				
+<span class="fc" id="L42">			}</span>
+<span class="fc" id="L43">			rs.close();</span>
+<span class="fc" id="L44">			s.close();</span>
+<span class="nc" id="L45">		} catch (SQLException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L47">			e.printStackTrace();</span>
+<span class="fc" id="L48">		}</span>
+		//reimbs.forEach(System.out::println);
+<span class="fc" id="L50">		return reimbs;</span>
+	}
+
+	@Override
+	public Reimb findById(Integer i) {
+<span class="fc" id="L55">		Reimb reimb = null;</span>
+<span class="fc" id="L56">		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {</span>
+<span class="fc" id="L57">			String sql = &quot;select * from getReimbursement() where reimb_id = ?&quot;;</span>
+<span class="fc" id="L58">			PreparedStatement ps = conn.prepareStatement(sql);</span>
+<span class="fc" id="L59">			ps.setInt(1, i);</span>
+<span class="fc" id="L60">			ResultSet rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (rs.next()) {</span>
+<span class="fc" id="L62">				User author = new User(rs.getInt(&quot;author_id&quot;), rs.getString(&quot;author_username&quot;), rs.getString(&quot;author_password&quot;), rs.getString(&quot;author_first_name&quot;), </span>
+<span class="fc" id="L63">						rs.getString(&quot;author_last_name&quot;), rs.getString(&quot;author_email&quot;), new UserRole(rs.getInt(&quot;author_role_id&quot;), rs.getString(&quot;author_role&quot;)));</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">				User resolver = (rs.getInt(&quot;resolver_id&quot;) &gt; 0) ? new User(rs.getInt(&quot;resolver_id&quot;), rs.getString(&quot;resolver_username&quot;), rs.getString(&quot;resolver_password&quot;), rs.getString(&quot;resolver_first_name&quot;), </span>
+<span class="pc" id="L65">						rs.getString(&quot;resolver_last_name&quot;), rs.getString(&quot;resolver_email&quot;), new UserRole(rs.getInt(&quot;resolver_role_id&quot;), rs.getString(&quot;resolver_role&quot;))) : null;</span>
+<span class="fc" id="L66">				reimb = new Reimb(rs.getInt(&quot;reimb_id&quot;), rs.getDouble(&quot;reimb_amount&quot;), rs.getDate(&quot;reimb_submitted&quot;), </span>
+<span class="fc" id="L67">						rs.getDate(&quot;reimb_resolved&quot;), rs.getString(&quot;reimb_description&quot;), author, resolver, </span>
+<span class="fc" id="L68">						new ReimbStatus(rs.getInt(&quot;reimb_status_id&quot;), rs.getString(&quot;reimb_status&quot;)), new ReimbType(rs.getInt(&quot;reimb_type_id&quot;), rs.getString(&quot;reimb_type&quot;)));</span>
+				
+			}
+<span class="fc" id="L71">			rs.close();</span>
+<span class="fc" id="L72">			ps.close();</span>
+<span class="nc" id="L73">		} catch (SQLException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L75">			e.printStackTrace();</span>
+<span class="fc" id="L76">		}</span>
+<span class="fc" id="L77">		return reimb;</span>
+	}
+
+	@Override
+	public int update(Reimb t) {
+<span class="fc" id="L82">		int count = 0;</span>
+<span class="fc" id="L83">		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {</span>
+<span class="fc" id="L84">			String sql = &quot;update ers_reimbursement set reimb_amount = ?,&quot;</span>
+					+ &quot;reimb_description = ?,&quot;
+					+ &quot;reimb_author = ?,&quot;
+					+ &quot;reimb_resolver = ?,&quot;
+					+ &quot;reimb_status_id = ?,&quot;
+					+ &quot;reimb_type_id = ?&quot;
+					+ &quot;where reimb_id = ?&quot;;
+<span class="fc" id="L91">			PreparedStatement ps = conn.prepareStatement(sql);</span>
+<span class="fc" id="L92">			ps.setDouble(1, t.getAmount());</span>
+<span class="fc" id="L93">			ps.setString(2, t.getDescription());</span>
+<span class="fc" id="L94">			ps.setInt(3, t.getAuthor().getUserId());</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if ((t.getResolver() == null)) {</span>
+<span class="fc" id="L96">				ps.setNull(4, Types.INTEGER);</span>
+			} else {
+<span class="nc" id="L98">				ps.setInt(4, t.getResolver().getUserId());</span>
+			}
+<span class="fc" id="L100">			ps.setInt(5, t.getStatus().getStatusId());</span>
+<span class="fc" id="L101">			ps.setInt(6, t.getType().getTypeId());</span>
+<span class="fc" id="L102">			ps.setInt(7, t.getReimbId());</span>
+<span class="fc" id="L103">			count = ps.executeUpdate();</span>
+<span class="fc" id="L104">			ps.close();</span>
+<span class="nc" id="L105">		} catch (SQLException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L107">			e.printStackTrace();</span>
+<span class="fc" id="L108">		}</span>
+<span class="fc" id="L109">		return count;</span>
+	}
+	
+	public int update(int id, ReimbStatus rs, User resolver) {
+<span class="fc" id="L113">		int count = 0;</span>
+<span class="fc" id="L114">		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {</span>
+<span class="fc" id="L115">			String sql = &quot;call updateReimbursementStatus(?,?,?)&quot;;</span>
+<span class="fc" id="L116">			CallableStatement pc = conn.prepareCall(sql);</span>
+<span class="fc" id="L117">			pc.setInt(1, id);</span>
+<span class="fc" id="L118">			pc.setInt(2, rs.getStatusId());</span>
+<span class="fc" id="L119">			pc.setInt(3, resolver.getUserId());</span>
+<span class="fc" id="L120">			ResultSet rs1 = pc.executeQuery();</span>
+<span class="fc" id="L121">			rs1.next();</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">			count = (rs1.getInt(1) == 1) ? 1 : 0;</span>
+			//count = pc.getUpdateCount();/
+<span class="fc" id="L124">			System.out.print(count);</span>
+<span class="fc" id="L125">			pc.close();</span>
+<span class="fc" id="L126">			rs1.close();</span>
+<span class="nc" id="L127">		} catch (SQLException e) {</span>
+<span class="nc" id="L128">			count = 0;</span>
+<span class="nc" id="L129">			e.printStackTrace();</span>
+<span class="fc" id="L130">		}</span>
+<span class="fc" id="L131">		return count;</span>
+	}
+
+	@Override
+	public int create(Reimb t) {
+<span class="fc" id="L136">		int count = 0;</span>
+<span class="fc" id="L137">		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {</span>
+<span class="fc" id="L138">			String sql = &quot;insert into ers_reimbursement (reimb_amount, reimb_description, reimb_author, reimb_status_id, reimb_type_id) values&quot;</span>
+					+ &quot;(?,?,?,?,?)&quot;;
+<span class="fc" id="L140">			PreparedStatement ps = conn.prepareStatement(sql);</span>
+<span class="fc" id="L141">			ps.setDouble(1, t.getAmount());</span>
+<span class="fc" id="L142">			ps.setString(2, t.getDescription());</span>
+<span class="fc" id="L143">			ps.setInt(3, t.getAuthor().getUserId());</span>
+<span class="fc" id="L144">			ps.setInt(4, t.getStatus().getStatusId());</span>
+<span class="fc" id="L145">			ps.setInt(5, t.getType().getTypeId());</span>
+<span class="fc" id="L146">			count = ps.executeUpdate();</span>
+<span class="fc" id="L147">			ps.close();</span>
+<span class="nc" id="L148">		} catch (SQLException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L150">			e.printStackTrace();</span>
+<span class="fc" id="L151">		}</span>
+<span class="fc" id="L152">		return count;</span>
+	}
+
+	@Override
+	public int delete(Integer i) {
+<span class="fc" id="L157">		int count = 0;</span>
+<span class="fc" id="L158">		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {</span>
+<span class="fc" id="L159">			String sql = &quot;delete from ers_reimbursement where reimb_id = ?&quot;;</span>
+<span class="fc" id="L160">			PreparedStatement ps = conn.prepareStatement(sql);</span>
+<span class="fc" id="L161">			ps.setInt(1, i);</span>
+<span class="fc" id="L162">			count = ps.executeUpdate();</span>
+
+<span class="fc" id="L164">			ps.close();</span>
+<span class="nc" id="L165">		} catch (SQLException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L167">			e.printStackTrace();</span>
+<span class="fc" id="L168">		}</span>
+<span class="fc" id="L169">		return count;</span>
+	}
+
+	@Override
+	public Reimb findByName(String name) {
+		// TODO Auto-generated method stub
+<span class="nc" id="L175">		return null;</span>
+	}
+	
+	public List&lt;Reimb&gt; findByAuthor(User a) {
+<span class="fc" id="L179">		List&lt;Reimb&gt; reimbs = new LinkedList&lt;Reimb&gt;();</span>
+<span class="fc" id="L180">		try (Connection conn = ConnectionUtil.getInstance().getConnection()) {</span>
+<span class="fc" id="L181">			String sql = &quot;select * from getReimbursement() where author_id = ?&quot;;</span>
+<span class="fc" id="L182">			PreparedStatement ps = conn.prepareStatement(sql);</span>
+<span class="fc" id="L183">			ps.setInt(1, a.getUserId());</span>
+<span class="fc" id="L184">			ResultSet rs = ps.executeQuery();</span>
+			//This single SQL function contains all necessary information
+			//to generate every POJO without needing to call a million other
+			//JDBC calls
+			//Sanity was lost the day this method was created
+<span class="fc bfc" id="L189" title="All 2 branches covered.">			while (rs.next()) {</span>
+<span class="fc" id="L190">				User author = new User(rs.getInt(&quot;author_id&quot;), rs.getString(&quot;author_username&quot;), rs.getString(&quot;author_password&quot;), rs.getString(&quot;author_first_name&quot;), </span>
+<span class="fc" id="L191">						rs.getString(&quot;author_last_name&quot;), rs.getString(&quot;author_email&quot;), new UserRole(rs.getInt(&quot;author_role_id&quot;), rs.getString(&quot;author_role&quot;)));</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">				User resolver = (rs.getInt(&quot;resolver_id&quot;) &gt; 0) ? new User(rs.getInt(&quot;resolver_id&quot;), rs.getString(&quot;resolver_username&quot;), rs.getString(&quot;resolver_password&quot;), rs.getString(&quot;resolver_first_name&quot;), </span>
+<span class="pc" id="L193">						rs.getString(&quot;resolver_last_name&quot;), rs.getString(&quot;resolver_email&quot;), new UserRole(rs.getInt(&quot;resolver_role_id&quot;), rs.getString(&quot;resolver_role&quot;))) : null;</span>
+<span class="fc" id="L194">				reimbs.add(new Reimb(rs.getInt(&quot;reimb_id&quot;), rs.getDouble(&quot;reimb_amount&quot;), rs.getDate(&quot;reimb_submitted&quot;), </span>
+<span class="fc" id="L195">						rs.getDate(&quot;reimb_resolved&quot;), rs.getString(&quot;reimb_description&quot;), author, resolver, </span>
+<span class="fc" id="L196">						new ReimbStatus(rs.getInt(&quot;reimb_status_id&quot;), rs.getString(&quot;reimb_status&quot;)), new ReimbType(rs.getInt(&quot;reimb_type_id&quot;), rs.getString(&quot;reimb_type&quot;))));</span>
+				
+<span class="fc" id="L198">			}</span>
+<span class="fc" id="L199">			rs.close();</span>
+<span class="fc" id="L200">			ps.close();</span>
+<span class="nc" id="L201">		} catch (SQLException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L203">			e.printStackTrace();</span>
+<span class="fc" id="L204">		}</span>
+		//reimbs.forEach(System.out::println);
+<span class="fc" id="L206">		return reimbs;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Reimbursement</a> &gt; <a href="index.source.html" class="el_package">com.reimb.controller</a> &gt; <span class="el_source">LoginController.java</span></div><h1>LoginController.java</h1><pre class="source lang-java linenums">package com.reimb.controller;
+
+import javax.servlet.http.*;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.reimb.model.User;
+import com.reimb.service.UserService;
+
+import java.io.IOException;
+
+import javax.servlet.*;
+
+public class LoginController {
+	
+	private UserService userService;
+	
+<span class="nc" id="L17">	public LoginController() {</span>
+<span class="nc" id="L18">		userService = new UserService();</span>
+<span class="nc" id="L19">	}</span>
+	
+<span class="fc" id="L21">	public LoginController(UserService us) {</span>
+<span class="fc" id="L22">		userService = us;</span>
+<span class="fc" id="L23">	}</span>
+	
+	public void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">		if (!req.getMethod().equals(&quot;POST&quot;)) {</span>
+<span class="nc" id="L27">			res.sendRedirect(req.getContextPath() + &quot;/login.html&quot;);</span>
+		} else {
+<span class="fc" id="L29">			String username = req.getParameter(&quot;username&quot;);</span>
+<span class="fc" id="L30">			String password = req.getParameter(&quot;password&quot;);</span>
+			
+<span class="fc" id="L32">			User user = userService.verify(username, username);</span>
+			
+<span class="pc bpc" id="L34" title="3 of 6 branches missed.">			if (username.isEmpty() || password.isEmpty() || (user == null)) {</span>
+<span class="nc" id="L35">				res.setStatus(HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="nc" id="L36">				res.sendRedirect(req.getContextPath() + &quot;/LoginFail.html&quot;);</span>
+			} else {
+<span class="fc" id="L38">				HttpSession session = req.getSession(true);</span>
+<span class="fc" id="L39">				user.setPassword(null);</span>
+<span class="fc" id="L40">				session.setAttribute(&quot;User&quot;, user);</span>
+<span class="fc" id="L41">				session.setAttribute(&quot;UserRole&quot;, user.getRole());</span>
+				
+<span class="fc" id="L43">				res.sendRedirect(req.getContextPath() + &quot;/main&quot;);</span>
+			}
+		}
+<span class="fc" id="L46">	}</span>
+	
+	public void logout(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+<span class="fc" id="L49">		HttpSession session = req.getSession(false);</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (session == null) {</span>
+<span class="nc" id="L51">			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="nc" id="L52">			res.setContentType(&quot;text/plain&quot;);</span>
+<span class="nc" id="L53">			res.getWriter().write(&quot;false&quot;);</span>
+<span class="nc" id="L54">			res.getWriter().close();</span>
+		} else {
+<span class="fc" id="L56">			session.invalidate();</span>
+<span class="fc" id="L57">			res.setContentType(&quot;text/plain&quot;);</span>
+<span class="fc" id="L58">			res.getWriter().write(&quot;true&quot;);</span>
+<span class="fc" id="L59">			res.getWriter().close();</span>
+		}
+<span class="fc" id="L61">	}</span>
+	
+	public void getUser(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+<span class="fc" id="L64">		HttpSession session = req.getSession(false);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (session == null) {</span>
+<span class="nc" id="L66">			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="nc" id="L67">			res.setContentType(&quot;text/plain&quot;);</span>
+<span class="nc" id="L68">			res.getWriter().write(&quot;There was no user logged into the session&quot;);</span>
+<span class="nc" id="L69">			res.getWriter().close();</span>
+		} else {
+<span class="fc" id="L71">			ObjectMapper om = new ObjectMapper();</span>
+<span class="fc" id="L72">			User user = (User) session.getAttribute(&quot;User&quot;);</span>
+<span class="fc" id="L73">			res.setContentType(&quot;application/json&quot;);</span>
+<span class="fc" id="L74">			res.getWriter().write(om.writeValueAsString(user));</span>
+		}
+<span class="fc" id="L76">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

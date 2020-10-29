@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReimbService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Reimbursement</a> &gt; <a href="index.source.html" class="el_package">com.reimb.service</a> &gt; <span class="el_source">ReimbService.java</span></div><h1>ReimbService.java</h1><pre class="source lang-java linenums">package com.reimb.service;
+
+import java.util.List;
+
+import com.reimb.model.Reimb;
+import com.reimb.model.ReimbStatus;
+import com.reimb.model.ReimbType;
+import com.reimb.model.User;
+import com.reimb.model.UserRole;
+import com.reimb.repo.ReimbDao;
+import com.reimb.repo.ReimbStatusDao;
+import com.reimb.repo.ReimbTypeDao;
+import com.reimb.repo.UserRoleDao;
+
+public class ReimbService {
+
+	private ReimbDao rd;
+	private ReimbStatusDao rsd;
+	private ReimbTypeDao rtd;
+	private UserRoleDao urd;
+	private UserRole manager;
+	
+	public ReimbService(ReimbDao rd, ReimbStatusDao rsd, ReimbTypeDao rtd, UserRoleDao urd) {
+<span class="fc" id="L24">		super();</span>
+<span class="fc" id="L25">		this.rd = rd;</span>
+<span class="fc" id="L26">		this.rsd = rsd;</span>
+<span class="fc" id="L27">		this.rtd = rtd;</span>
+<span class="fc" id="L28">		this.urd = urd;</span>
+<span class="fc" id="L29">		manager = this.urd.findByName(&quot;manager&quot;);</span>
+<span class="fc" id="L30">	}</span>
+	
+	public ReimbService() {
+<span class="nc" id="L33">		this(new ReimbDao(), new ReimbStatusDao(), new ReimbTypeDao(), new UserRoleDao());</span>
+<span class="nc" id="L34">	}</span>
+	
+	public List&lt;Reimb&gt; findAll() {
+<span class="nc" id="L37">		return rd.findAll();</span>
+	}
+	
+	public Reimb findById(int i) {
+<span class="nc" id="L41">		return rd.findById(i);</span>
+	}
+	
+	public boolean update(Reimb r, User u) {
+<span class="pc bpc" id="L45" title="3 of 4 branches missed.">		if (r.getAuthor().getUserId() == u.getUserId() || u.getRole().equals(manager)) {</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">			return (rd.update(r) != 0) ? true : false;</span>
+		}
+<span class="nc" id="L48">		return false;</span>
+	}
+	
+	public boolean changeStatus(Reimb r, ReimbStatus rs, User u) {
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (u.getRole().equals(manager)) {</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">			return (rd.update(r.getReimbId(), rs, u) != 0) ? true : false;</span>
+		}
+<span class="nc" id="L55">		return false;</span>
+	}
+	
+	public boolean create(Reimb r) {
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		return (rd.create(r) != 0) ? true : false;</span>
+	}
+	
+	public List&lt;Reimb&gt; findByAuthor(User a, User requester) {
+<span class="pc bpc" id="L63" title="2 of 4 branches missed.">		if (a.getUserId() == requester.getUserId() || requester.getRole().equals(manager)) {</span>
+<span class="fc" id="L64">			return rd.findByAuthor(a);</span>
+		}
+<span class="nc" id="L66">		return null;</span>
+	}
+	
+	public List&lt;ReimbStatus&gt; findAllStatus() {
+<span class="nc" id="L70">		return rsd.findAll();</span>
+	}
+	
+	public List&lt;ReimbType&gt; findAllType() {
+<span class="nc" id="L74">		return rtd.findAll();</span>
+	}
+	
+	public boolean delete(Reimb r, User u) {
+<span class="pc bpc" id="L78" title="3 of 4 branches missed.">		if (r.getAuthor().getUserId() == u.getUserId() || u.getRole().equals(manager)) {</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			return (rd.delete(r.getReimbId()) != 0) ? true : false;</span>
+		}
+<span class="nc" id="L81">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

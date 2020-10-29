@@ -39,7 +39,7 @@ public class UserDaoTest {
 	public void findByIdTest() {
 		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(2, "manager"));
 		User user = ud.findById(1);
-		assertEquals(new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail", new UserRole(2, "manager")), user);
+		assertEquals(new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail@email", new UserRole(2, "manager")), user);
 	}
 
 	@Test
@@ -63,14 +63,14 @@ public class UserDaoTest {
 	@Test
 	public void findByUsernameTest() {
 		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(2, "manager"));
-		User u = new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail", new UserRole(2, "manager"));
+		User u = new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail@email", new UserRole(2, "manager"));
 		assertEquals(u, ud.findByUsername("admin"));
 	}
 	
 	@Test
 	public void findByUsernamePasswordTest() {
 		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(2, "manager"));
-		User u = new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail", new UserRole(2, "manager"));
+		User u = new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail@email", new UserRole(2, "manager"));
 		assertEquals(u, ud.findByUsernamePassword("admin", "admin"));
 	}
 	
