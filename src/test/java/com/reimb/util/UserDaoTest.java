@@ -30,27 +30,27 @@ public class UserDaoTest {
 
 	@Test
 	public void findAllTest() {
-		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(1, "employee"));
+		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(1, "Employee"));
 		List<User> users = ud.findAll();
 		assertFalse(users.size() == 0);
 	}
 	
 	@Test
 	public void findByIdTest() {
-		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(2, "manager"));
+		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(2, "Manager"));
 		User user = ud.findById(1);
-		assertEquals(new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail@email", new UserRole(2, "manager")), user);
+		assertEquals(new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail@email", new UserRole(2, "Manager")), user);
 	}
 
 	@Test
 	public void updateTest() {
-		User u = new User(1, "admin", "admin", "firstadmin", "lastname", "adminemail", new UserRole(2, "manager"));
+		User u = new User(1, "admin", "admin", "firstadmin", "lastname", "adminemail", new UserRole(2, "Manager"));
 		assertNotEquals(0, ud.update(u));
 	}
 	
 	@Test
 	public void AAAcreateTest() {
-		User u = new User(0, "jtest", "jtest", "testname", "lastname", "testemail", new UserRole(1, "employee"));
+		User u = new User(0, "jtest", "jtest", "testname", "lastname", "testemail", new UserRole(1, "Employee"));
 		assertNotEquals(0, ud.create(u));
 	}
 	
@@ -62,15 +62,15 @@ public class UserDaoTest {
 	
 	@Test
 	public void findByUsernameTest() {
-		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(2, "manager"));
-		User u = new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail@email", new UserRole(2, "manager"));
+		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(2, "Manager"));
+		User u = new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail@email", new UserRole(2, "Manager"));
 		assertEquals(u, ud.findByUsername("admin"));
 	}
 	
 	@Test
 	public void findByUsernamePasswordTest() {
-		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(2, "manager"));
-		User u = new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail@email", new UserRole(2, "manager"));
+		Mockito.when(dao.findById(anyInt())).thenReturn(new UserRole(2, "Manager"));
+		User u = new User(1, "admin", "9b0aa47997ca0fdd817a574b099b9149", "firstadmin", "lastname", "adminemail@email", new UserRole(2, "Manager"));
 		assertEquals(u, ud.findByUsernamePassword("admin", "admin"));
 	}
 	

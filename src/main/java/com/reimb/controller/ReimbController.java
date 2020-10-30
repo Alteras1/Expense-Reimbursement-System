@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reimb.model.Reimb;
 import com.reimb.model.ReimbStatus;
@@ -97,8 +98,10 @@ public class ReimbController {
 		HttpSession ses = req.getSession(false);
 		if (ses != null) {
 			User currentUser = (User) ses.getAttribute("User");
-			Reimb newReimb = om.readValue(req.getReader(), Reimb.class);
-			Boolean success = reimbService.changeStatus(newReimb, newReimb.getStatus(), currentUser);
+			JsonNode jsonNode = om.readTree(req.getInputStream());
+			Reimb newReimb = om.convertValue(jsonNode.get("reimb"), Reimb.class);
+			ReimbStatus newStatus = om.convertValue(jsonNode.get("status"), ReimbStatus.class);
+			Boolean success = reimbService.changeStatus(newReimb, newStatus, currentUser);
 			res.setContentType("application/json");
 			res.getWriter().write(om.writeValueAsString(success));
 			res.getWriter().close();

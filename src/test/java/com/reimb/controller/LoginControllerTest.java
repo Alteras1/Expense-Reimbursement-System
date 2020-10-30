@@ -44,7 +44,7 @@ public class LoginControllerTest {
 		when(req.getParameter("username")).thenReturn("admin");
 		when(req.getParameter("password")).thenReturn("admin");
 		when(req.getSession(true)).thenReturn(ses);
-		when(us.verify("admin", "admin")).thenReturn(new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager")));
+		when(us.verify("admin", "admin")).thenReturn(new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"Manager")));
 		try {
 			ls.login(req, res);
 			Mockito.verify(res).sendRedirect(anyString());
@@ -60,7 +60,7 @@ public class LoginControllerTest {
 	@Test
 	public void logoutTest() {
 		LoginController ls = new LoginController(us);
-		ses.setAttribute("User", new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager")));
+		ses.setAttribute("User", new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"Manager")));
 		when(req.getSession(false)).thenReturn(ses);
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
@@ -82,9 +82,9 @@ public class LoginControllerTest {
 	@Test
 	public void getUserTest() {
 		LoginController ls = new LoginController(us);
-		ses.setAttribute("User", new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager")));
+		ses.setAttribute("User", new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"Manager")));
 		when(req.getSession(false)).thenReturn(ses);
-		when(ses.getAttribute("User")).thenReturn(new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager")));
+		when(ses.getAttribute("User")).thenReturn(new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"Manager")));
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
 		try {
@@ -98,7 +98,7 @@ public class LoginControllerTest {
 			e.printStackTrace();
 		}
 		writer.flush();
-		assertEquals("{\"userId\":1,\"username\":\"admin\",\"password\":\"admin\",\"firstName\":\"first\",\"lastName\":\"last\",\"email\":\"email\",\"role\":{\"roleId\":2,\"role\":\"manager\"}}", stringWriter.toString());
+		assertEquals("{\"userId\":1,\"username\":\"admin\",\"password\":\"admin\",\"firstName\":\"first\",\"lastName\":\"last\",\"email\":\"email\",\"role\":{\"roleId\":2,\"role\":\"Manager\"}}", stringWriter.toString());
 		stringWriter.flush();
 	}
 

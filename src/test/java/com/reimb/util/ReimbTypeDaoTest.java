@@ -33,14 +33,14 @@ public class ReimbTypeDaoTest {
 	
 	@Test
 	public void updateTest() {
-		ReimbType s = new ReimbType(1, "lodging");
+		ReimbType s = new ReimbType(1, "Lodging");
 		assertNotEquals(0, rtd.update(s));
 	}
 	
 	@Test
 	public void findByNameTest() {
-		ReimbType s = rtd.findByName("lodging");
-		assertEquals(new ReimbType(1, "lodging"), s);
+		ReimbType s = rtd.findByName("Lodging");
+		assertEquals(new ReimbType(1, "Lodging"), s);
 	}
 
 }

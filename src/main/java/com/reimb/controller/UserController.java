@@ -33,7 +33,7 @@ public class UserController {
 		} else {
 			UserRole sessionRole = (UserRole) session.getAttribute("UserRole");
 			System.out.println(sessionRole);
-			if (sessionRole.getRole().equals("manager")) {
+			if (sessionRole.getRole().equals("Manager")) {
 				User newUser = om.readValue(req.getReader(), User.class);
 				Boolean success = userService.createUser(newUser);
 				res.setStatus((success) ? HttpServletResponse.SC_CREATED : HttpServletResponse.SC_CONFLICT);

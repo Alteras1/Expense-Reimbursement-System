@@ -33,14 +33,14 @@ public class UserRolesDaoTest {
 	
 	@Test
 	public void updateTest() {
-		UserRole s = new UserRole(1, "employee");
+		UserRole s = new UserRole(1, "Employee");
 		assertNotEquals(0, urd.update(s));
 	}
 	
 	@Test
 	public void findByNameTest() {
-		UserRole s = urd.findByName("employee");
-		assertEquals(new UserRole(1, "employee"), s);
+		UserRole s = urd.findByName("Employee");
+		assertEquals(new UserRole(1, "Employee"), s);
 	}
 
 }

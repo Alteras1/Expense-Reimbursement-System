@@ -6,7 +6,8 @@ newReimb.addEventListener("submit", (event) => {
   data.status = reimbStatus[0];
   data.type = reimbType[data.type];
   data.author = JSON.parse(localStorage.getItem("user"));
-  document.getElementById("newReimbStatus").innerHTML = "requesting";
+  document.getElementById("newReimbStatus").innerHTML =
+    '<i class="fas fa-spinner fa-spin fa-lg fa-fw"></i>';
   asyncFetch("/reimb", reimbRenderer, {
     method: "POST",
     body: JSON.stringify(data),
@@ -15,7 +16,8 @@ newReimb.addEventListener("submit", (event) => {
 
 function reimbRenderer() {
   if (document.getElementById("newReimbStatus").innerHTML.length != 0) {
-    document.getElementById("newReimbStatus").innerHTML = "successful!";
+    document.getElementById("newReimbStatus").innerHTML =
+      '<i class="fas fa-check-circle fa-lg fa-fw"></i>';
   }
   let user = JSON.parse(localStorage.getItem("user"));
   asyncFetch(`/reimb/author/${user.userId}`, renderReimb);
@@ -63,17 +65,22 @@ account.addEventListener("submit", (event) => {
   user.email = user.email != data.email ? data.email : user.email;
   user.username =
     user.username != data.username ? data.username : user.username;
-  if (data.oldPassword != data.newPassword) {
+  user.password = data.oldPassword;
+  console.log(user);
+  if (data.oldPassword != data.newPassword && data.newPassword.length > 0) {
     user.password = data.newPassword;
   }
   if (data.oldPassword != null) {
+    document.getElementById("updateStatus").innerHTML =
+      '<i class="fas fa-spinner fa-spin fa-lg fa-fw"></i>';
     asyncFetch(
       "/user",
       (json) => {
         if (json == true) {
           window.location.href = "/Reimbursement/logout.html";
         } else {
-          document.getElementById("updateStatus").innerHTML = "update failed";
+          document.getElementById("updateStatus").innerHTML =
+            '<i class="fas fa-times-circle fa-lg fa-fw"></i> Update Failed';
         }
       },
       { method: "POST", body: JSON.stringify(user) }

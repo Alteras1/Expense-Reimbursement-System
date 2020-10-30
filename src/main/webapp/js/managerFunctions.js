@@ -39,18 +39,21 @@ account.addEventListener("submit", (event) => {
   event.preventDefault();
   let data = formToJson(event);
   data.role = [
-    { role: "employee", roleId: 1 },
-    { role: "manager", roleId: 2 },
-  ][data.role];
+    { role: "Employee", roleId: 1 },
+    { role: "Manager", roleId: 2 },
+  ][data.role - 1];
   console.log(data);
+  document.getElementById("createStatus").innerHTML =
+    '<i class="fas fa-spinner fa-spin fa-lg fa-fw"></i>';
   asyncFetch(
     "/user/new",
     (json) => {
       if (json == true) {
         document.getElementById("createStatus").innerHTML =
-          "Creation successful";
+          '<i class="fas fa-check-circle fa-lg fa-fw"></i> Creation successful';
       } else {
-        document.getElementById("createStatus").innerHTML = "Creation failed";
+        document.getElementById("createStatus").innerHTML =
+          '<i class="fas fa-times-circle fa-lg fa-fw"></i> Creation failed';
       }
     },
     { method: "POST", body: JSON.stringify(data) }
@@ -106,12 +109,15 @@ document.getElementById("viewClaim").addEventListener("submit", (event) => {
 
 document.getElementById("updateSubmit").addEventListener("click", (event) => {
   event.preventDefault();
+  document.getElementById("updateStatus").innerHTML =
+    '<i class="fas fa-spinner fa-spin fa-lg fa-fw"></i>';
   let status = reimbStatus.filter(
     (a) => (a.statusId = document.getElementById("claimUpdate").value)
   )[0];
-  claimingReimb.status = status;
   asyncFetch("/reimbVerify", reimbRenderer, {
     method: "POST",
-    body: JSON.stringify(claimingReimb),
+    body: JSON.stringify({ reimb: claimingReimb, status: status }),
   });
+  document.getElementById("updateStatus").innerHTML =
+    '<i class="fas fa-check-circle fa-lg fa-fw"></i>';
 });

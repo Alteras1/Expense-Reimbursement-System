@@ -31,7 +31,7 @@ public class UserService {
 	}
 	
 	public boolean updateUser(User u, User requester) {
-<span class="fc" id="L34">		UserRole manager = urd.findByName(&quot;manager&quot;);</span>
+<span class="fc" id="L34">		UserRole manager = urd.findByName(&quot;Manager&quot;);</span>
 <span class="pc bpc" id="L35" title="2 of 4 branches missed.">		if (u.getUserId() == requester.getUserId() || requester.getRole().equals(manager)) {</span>
 <span class="nc bnc" id="L36" title="All 2 branches missed.">			return (ud.update(u) != 0) ? true : false;</span>
 		}
@@ -51,7 +51,7 @@ public class UserService {
 	}
 	
 	public boolean deleteUser(User u, User requester) {
-<span class="fc" id="L54">		UserRole manager = urd.findByName(&quot;manager&quot;);</span>
+<span class="fc" id="L54">		UserRole manager = urd.findByName(&quot;Manager&quot;);</span>
 <span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (requester.getRole().equals(manager)) {</span>
 <span class="nc bnc" id="L56" title="All 2 branches missed.">			return (ud.delete(u.getUserId()) != 0) ? true : false;</span>
 		}

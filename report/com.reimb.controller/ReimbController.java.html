@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reimb.model.Reimb;
 import com.reimb.model.ReimbStatus;
@@ -20,130 +21,132 @@ public class ReimbController {
 	
 	private ReimbService reimbService;
 	private UserService userService;
-<span class="pc" id="L23">	private ObjectMapper om = new ObjectMapper();</span>
+<span class="pc" id="L24">	private ObjectMapper om = new ObjectMapper();</span>
 
-<span class="nc" id="L25">	public ReimbController() {</span>
-<span class="nc" id="L26">		reimbService = new ReimbService();</span>
-<span class="nc" id="L27">		userService = new UserService();</span>
-<span class="nc" id="L28">	}</span>
+<span class="nc" id="L26">	public ReimbController() {</span>
+<span class="nc" id="L27">		reimbService = new ReimbService();</span>
+<span class="nc" id="L28">		userService = new UserService();</span>
+<span class="nc" id="L29">	}</span>
 	
-<span class="fc" id="L30">	public ReimbController(ReimbService rs, UserService us) {</span>
-<span class="fc" id="L31">		reimbService = rs;</span>
-<span class="fc" id="L32">		userService = us;</span>
-<span class="fc" id="L33">	}</span>
+<span class="fc" id="L31">	public ReimbController(ReimbService rs, UserService us) {</span>
+<span class="fc" id="L32">		reimbService = rs;</span>
+<span class="fc" id="L33">		userService = us;</span>
+<span class="fc" id="L34">	}</span>
 
 	public void status(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-<span class="nc" id="L36">		List&lt;ReimbStatus&gt; statuses = reimbService.findAllStatus();</span>
-<span class="nc" id="L37">		res.setContentType(&quot;application/json&quot;);</span>
-<span class="nc" id="L38">		res.getWriter().write(om.writeValueAsString(statuses));</span>
-<span class="nc" id="L39">		res.getWriter().close();</span>
-<span class="nc" id="L40">	}</span>
+<span class="nc" id="L37">		List&lt;ReimbStatus&gt; statuses = reimbService.findAllStatus();</span>
+<span class="nc" id="L38">		res.setContentType(&quot;application/json&quot;);</span>
+<span class="nc" id="L39">		res.getWriter().write(om.writeValueAsString(statuses));</span>
+<span class="nc" id="L40">		res.getWriter().close();</span>
+<span class="nc" id="L41">	}</span>
 	
 	public void type(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-<span class="nc" id="L43">		List&lt;ReimbType&gt; types = reimbService.findAllType();</span>
-<span class="nc" id="L44">		res.setContentType(&quot;application/json&quot;);</span>
-<span class="nc" id="L45">		res.getWriter().write(om.writeValueAsString(types));</span>
-<span class="nc" id="L46">		res.getWriter().close();</span>
-<span class="nc" id="L47">	}</span>
+<span class="nc" id="L44">		List&lt;ReimbType&gt; types = reimbService.findAllType();</span>
+<span class="nc" id="L45">		res.setContentType(&quot;application/json&quot;);</span>
+<span class="nc" id="L46">		res.getWriter().write(om.writeValueAsString(types));</span>
+<span class="nc" id="L47">		res.getWriter().close();</span>
+<span class="nc" id="L48">	}</span>
 	
 	public void viewAll(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-<span class="nc" id="L50">		List&lt;Reimb&gt; statuses = reimbService.findAll();</span>
-<span class="nc" id="L51">		res.setContentType(&quot;application/json&quot;);</span>
-<span class="nc" id="L52">		res.getWriter().write(om.writeValueAsString(statuses));</span>
-<span class="nc" id="L53">		res.getWriter().close();</span>
-<span class="nc" id="L54">	}</span>
+<span class="nc" id="L51">		List&lt;Reimb&gt; statuses = reimbService.findAll();</span>
+<span class="nc" id="L52">		res.setContentType(&quot;application/json&quot;);</span>
+<span class="nc" id="L53">		res.getWriter().write(om.writeValueAsString(statuses));</span>
+<span class="nc" id="L54">		res.getWriter().close();</span>
+<span class="nc" id="L55">	}</span>
 	
 	public void newReimb(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (req.getSession(false) != null) {</span>
-<span class="fc" id="L58">			Reimb newReimb = om.readValue(req.getReader(), Reimb.class);</span>
-<span class="fc" id="L59">			Boolean success = reimbService.create(newReimb);</span>
-<span class="fc" id="L60">			res.setContentType(&quot;application/json&quot;);</span>
-<span class="fc" id="L61">			res.getWriter().write(om.writeValueAsString(success));</span>
-<span class="fc" id="L62">			res.getWriter().close();</span>
-<span class="fc" id="L63">		} else {</span>
-<span class="nc" id="L64">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (req.getSession(false) != null) {</span>
+<span class="fc" id="L59">			Reimb newReimb = om.readValue(req.getReader(), Reimb.class);</span>
+<span class="fc" id="L60">			Boolean success = reimbService.create(newReimb);</span>
+<span class="fc" id="L61">			res.setContentType(&quot;application/json&quot;);</span>
+<span class="fc" id="L62">			res.getWriter().write(om.writeValueAsString(success));</span>
+<span class="fc" id="L63">			res.getWriter().close();</span>
+<span class="fc" id="L64">		} else {</span>
+<span class="nc" id="L65">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
 		}
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L67">	}</span>
 	
 	public void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-<span class="fc" id="L69">		HttpSession ses = req.getSession(false);</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (ses != null) {</span>
-<span class="fc" id="L71">			User currentUser = (User) ses.getAttribute(&quot;User&quot;);</span>
-<span class="fc" id="L72">			Reimb newReimb = om.readValue(req.getReader(), Reimb.class);</span>
-<span class="fc" id="L73">			Boolean success = reimbService.update(newReimb, currentUser);</span>
-<span class="fc" id="L74">			res.setContentType(&quot;application/json&quot;);</span>
-<span class="fc" id="L75">			res.getWriter().write(om.writeValueAsString(success));</span>
-<span class="fc" id="L76">			res.getWriter().close();</span>
-<span class="fc" id="L77">		} else {</span>
-<span class="nc" id="L78">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
+<span class="fc" id="L70">		HttpSession ses = req.getSession(false);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (ses != null) {</span>
+<span class="fc" id="L72">			User currentUser = (User) ses.getAttribute(&quot;User&quot;);</span>
+<span class="fc" id="L73">			Reimb newReimb = om.readValue(req.getReader(), Reimb.class);</span>
+<span class="fc" id="L74">			Boolean success = reimbService.update(newReimb, currentUser);</span>
+<span class="fc" id="L75">			res.setContentType(&quot;application/json&quot;);</span>
+<span class="fc" id="L76">			res.getWriter().write(om.writeValueAsString(success));</span>
+<span class="fc" id="L77">			res.getWriter().close();</span>
+<span class="fc" id="L78">		} else {</span>
+<span class="nc" id="L79">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
 		}
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L81">	}</span>
 	
 	public void delete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-<span class="fc" id="L83">		HttpSession ses = req.getSession(false);</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (ses != null) {</span>
-<span class="fc" id="L85">			User currentUser = (User) ses.getAttribute(&quot;User&quot;);</span>
-<span class="fc" id="L86">			Reimb newReimb = om.readValue(req.getReader(), Reimb.class);</span>
-<span class="fc" id="L87">			Boolean success = reimbService.delete(newReimb, currentUser);</span>
-<span class="fc" id="L88">			res.setContentType(&quot;application/json&quot;);</span>
-<span class="fc" id="L89">			res.getWriter().write(om.writeValueAsString(success));</span>
-<span class="fc" id="L90">			res.getWriter().close();</span>
-<span class="fc" id="L91">		} else {</span>
-<span class="nc" id="L92">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
+<span class="fc" id="L84">		HttpSession ses = req.getSession(false);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (ses != null) {</span>
+<span class="fc" id="L86">			User currentUser = (User) ses.getAttribute(&quot;User&quot;);</span>
+<span class="fc" id="L87">			Reimb newReimb = om.readValue(req.getReader(), Reimb.class);</span>
+<span class="fc" id="L88">			Boolean success = reimbService.delete(newReimb, currentUser);</span>
+<span class="fc" id="L89">			res.setContentType(&quot;application/json&quot;);</span>
+<span class="fc" id="L90">			res.getWriter().write(om.writeValueAsString(success));</span>
+<span class="fc" id="L91">			res.getWriter().close();</span>
+<span class="fc" id="L92">		} else {</span>
+<span class="nc" id="L93">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
 		}
-<span class="fc" id="L94">	}</span>
+<span class="fc" id="L95">	}</span>
 	
 	public void verify(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-<span class="fc" id="L97">		HttpSession ses = req.getSession(false);</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (ses != null) {</span>
-<span class="fc" id="L99">			User currentUser = (User) ses.getAttribute(&quot;User&quot;);</span>
-<span class="nc" id="L100">			Reimb newReimb = om.readValue(req.getReader(), Reimb.class);</span>
-<span class="nc" id="L101">			Boolean success = reimbService.changeStatus(newReimb, newReimb.getStatus(), currentUser);</span>
-<span class="nc" id="L102">			res.setContentType(&quot;application/json&quot;);</span>
-<span class="nc" id="L103">			res.getWriter().write(om.writeValueAsString(success));</span>
-<span class="nc" id="L104">			res.getWriter().close();</span>
-<span class="nc" id="L105">		} else {</span>
-<span class="nc" id="L106">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
+<span class="fc" id="L98">		HttpSession ses = req.getSession(false);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (ses != null) {</span>
+<span class="fc" id="L100">			User currentUser = (User) ses.getAttribute(&quot;User&quot;);</span>
+<span class="nc" id="L101">			JsonNode jsonNode = om.readTree(req.getInputStream());</span>
+<span class="nc" id="L102">			Reimb newReimb = om.convertValue(jsonNode.get(&quot;reimb&quot;), Reimb.class);</span>
+<span class="nc" id="L103">			ReimbStatus newStatus = om.convertValue(jsonNode.get(&quot;status&quot;), ReimbStatus.class);</span>
+<span class="nc" id="L104">			Boolean success = reimbService.changeStatus(newReimb, newStatus, currentUser);</span>
+<span class="nc" id="L105">			res.setContentType(&quot;application/json&quot;);</span>
+<span class="nc" id="L106">			res.getWriter().write(om.writeValueAsString(success));</span>
+<span class="nc" id="L107">			res.getWriter().close();</span>
+<span class="nc" id="L108">		} else {</span>
+<span class="nc" id="L109">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
 		}
-<span class="nc" id="L108">	}</span>
+<span class="nc" id="L111">	}</span>
 	
 	public void viewById(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-<span class="fc" id="L111">		HttpSession ses = req.getSession(false);</span>
-<span class="fc" id="L112">		int id = 0;</span>
+<span class="fc" id="L114">		HttpSession ses = req.getSession(false);</span>
+<span class="fc" id="L115">		int id = 0;</span>
 		try {
-<span class="fc" id="L114">			id = Integer.parseInt(req.getPathInfo().split(&quot;/&quot;)[3]);</span>
-<span class="nc" id="L115">		} catch (NumberFormatException e) {</span>
-<span class="nc" id="L116">			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);</span>
-<span class="fc" id="L117">		}</span>
-<span class="pc bpc" id="L118" title="2 of 4 branches missed.">		if (ses != null &amp;&amp; id != 0) {</span>
-<span class="fc" id="L119">			Reimb foundReimb = reimbService.findById(id);</span>
-<span class="fc" id="L120">			res.setContentType(&quot;application/json&quot;);</span>
-<span class="fc" id="L121">			res.getWriter().write(om.writeValueAsString(foundReimb));</span>
-<span class="fc" id="L122">			res.getWriter().close();</span>
-<span class="fc" id="L123">		} else {</span>
-<span class="nc" id="L124">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
+<span class="fc" id="L117">			id = Integer.parseInt(req.getPathInfo().split(&quot;/&quot;)[3]);</span>
+<span class="nc" id="L118">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L119">			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="fc" id="L120">		}</span>
+<span class="pc bpc" id="L121" title="2 of 4 branches missed.">		if (ses != null &amp;&amp; id != 0) {</span>
+<span class="fc" id="L122">			Reimb foundReimb = reimbService.findById(id);</span>
+<span class="fc" id="L123">			res.setContentType(&quot;application/json&quot;);</span>
+<span class="fc" id="L124">			res.getWriter().write(om.writeValueAsString(foundReimb));</span>
+<span class="fc" id="L125">			res.getWriter().close();</span>
+<span class="fc" id="L126">		} else {</span>
+<span class="nc" id="L127">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
 		}
-<span class="fc" id="L126">	}</span>
+<span class="fc" id="L129">	}</span>
 	
 	public void viewByAuthor(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-<span class="fc" id="L129">		HttpSession ses = req.getSession(false);</span>
-<span class="fc" id="L130">		int id = 0;</span>
+<span class="fc" id="L132">		HttpSession ses = req.getSession(false);</span>
+<span class="fc" id="L133">		int id = 0;</span>
 		try {
-<span class="fc" id="L132">			id = Integer.parseInt(req.getPathInfo().split(&quot;/&quot;)[3]);</span>
-<span class="nc" id="L133">		} catch (NumberFormatException e) {</span>
-<span class="nc" id="L134">			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);</span>
-<span class="fc" id="L135">		}</span>
-<span class="fc" id="L136">		User author = userService.findById(id);</span>
-<span class="pc bpc" id="L137" title="2 of 4 branches missed.">		if (ses != null &amp;&amp; author != null) {</span>
-<span class="fc" id="L138">			User requester = (User) ses.getAttribute(&quot;User&quot;);</span>
-<span class="fc" id="L139">			List&lt;Reimb&gt; foundReimbs = reimbService.findByAuthor(author, requester);</span>
-<span class="fc" id="L140">			res.setContentType(&quot;application/json&quot;);</span>
-<span class="fc" id="L141">			res.getWriter().write(om.writeValueAsString(foundReimbs));</span>
-<span class="fc" id="L142">			res.getWriter().close();</span>
-<span class="fc" id="L143">		} else {</span>
-<span class="nc" id="L144">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
+<span class="fc" id="L135">			id = Integer.parseInt(req.getPathInfo().split(&quot;/&quot;)[3]);</span>
+<span class="nc" id="L136">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L137">			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="fc" id="L138">		}</span>
+<span class="fc" id="L139">		User author = userService.findById(id);</span>
+<span class="pc bpc" id="L140" title="2 of 4 branches missed.">		if (ses != null &amp;&amp; author != null) {</span>
+<span class="fc" id="L141">			User requester = (User) ses.getAttribute(&quot;User&quot;);</span>
+<span class="fc" id="L142">			List&lt;Reimb&gt; foundReimbs = reimbService.findByAuthor(author, requester);</span>
+<span class="fc" id="L143">			res.setContentType(&quot;application/json&quot;);</span>
+<span class="fc" id="L144">			res.getWriter().write(om.writeValueAsString(foundReimbs));</span>
+<span class="fc" id="L145">			res.getWriter().close();</span>
+<span class="fc" id="L146">		} else {</span>
+<span class="nc" id="L147">			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
 		}
-<span class="fc" id="L146">	}</span>
+<span class="fc" id="L149">	}</span>
 	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

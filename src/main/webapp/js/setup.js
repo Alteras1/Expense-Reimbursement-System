@@ -5,6 +5,9 @@ function currentUser(json) {
   let user = json;
   document.getElementById("currentUser").innerText =
     user.firstName + " " + user.lastName;
+  if (user.role.role == "Manager") {
+    document.getElementById("manager").hidden = false;
+  }
   reimbRenderer();
   getAccount();
 }

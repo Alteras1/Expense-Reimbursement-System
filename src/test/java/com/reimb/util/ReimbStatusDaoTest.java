@@ -33,14 +33,14 @@ public class ReimbStatusDaoTest {
 	
 	@Test
 	public void updateTest() {
-		ReimbStatus s = new ReimbStatus(1, "pending");
+		ReimbStatus s = new ReimbStatus(1, "Pending");
 		assertNotEquals(0, rsd.update(s));
 	}
 	
 	@Test
 	public void findByNameTest() {
-		ReimbStatus s = rsd.findByName("pending");
-		assertEquals(new ReimbStatus(1, "pending"), s);
+		ReimbStatus s = rsd.findByName("Pending");
+		assertEquals(new ReimbStatus(1, "Pending"), s);
 	}
 	
 }

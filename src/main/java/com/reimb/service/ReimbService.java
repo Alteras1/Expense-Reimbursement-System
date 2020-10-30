@@ -26,7 +26,7 @@ public class ReimbService {
 		this.rsd = rsd;
 		this.rtd = rtd;
 		this.urd = urd;
-		manager = this.urd.findByName("manager");
+		manager = this.urd.findByName("Manager");
 	}
 	
 	public ReimbService() {
@@ -49,7 +49,7 @@ public class ReimbService {
 	}
 	
 	public boolean changeStatus(Reimb r, ReimbStatus rs, User u) {
-		if (u.getRole().equals(manager)) {
+		if (u.getRole().equals(manager) && !(r.getStatus().equals(rs))) {
 			return (rd.update(r.getReimbId(), rs, u) != 0) ? true : false;
 		}
 		return false;
