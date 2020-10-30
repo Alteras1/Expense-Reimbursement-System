@@ -21,6 +21,7 @@ public class Dispatcher {
 		//Expected String request.getPathInfo() = "/login" "/reimb/..." "/status" "/type" "/user/..."
 		
 		String path = request.getPathInfo();
+		System.out.println(path);
 		
 		switch (path) {
 		case "/login":			//login
@@ -67,6 +68,10 @@ public class Dispatcher {
 				loginController = new LoginController();
 				loginController.getUser(request, response);
 				break;
+			case "POST":
+				userController = new UserController();
+				userController.update(request, response);
+				break;
 			}
 			break;
 		case "/user/new":		//create new user
@@ -77,10 +82,6 @@ public class Dispatcher {
 			userController = new UserController();
 			userController.checkUsername(request, response);
 			break;
-		case "/reimb/author":	//view by author
-			reimbController = new ReimbController();
-			if (request.getMethod().equals("GET")) reimbController.viewByAuthor(request, response);
-			break;
 		default: {				//special endpoint
 			if (path.split("/").length == 4) {
 				reimbController = new ReimbController();
@@ -89,6 +90,8 @@ public class Dispatcher {
 				case "/reimb/id":		//view by ID
 					reimbController.viewById(request, response);
 					break;
+				case "/reimb/author":	//view by author
+					reimbController.viewByAuthor(request, response);
 				}
 			}
 			}

@@ -8,10 +8,10 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.mockito.Mockito;
 
-import com.reim.repo.UserDao;
-import com.reim.repo.UserRoleDao;
 import com.reimb.model.User;
 import com.reimb.model.UserRole;
+import com.reimb.repo.UserDao;
+import com.reimb.repo.UserRoleDao;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserServiceTest {
@@ -54,8 +54,8 @@ public class UserServiceTest {
 	
 	@Test
 	public void CCCdeleteUserTest() {
-		User u = new User(0, "jtest", "jtest", "testname", "lastname", "jtestemail", new UserRole(1, "employee"));
-		User r = new User(1, "jtest", "jtest", "testname", "lastname", "jtestemail", new UserRole(2, "manager"));
+		User u = new User(0, "jtest", "jtest", "testname", "lastname", "jtestemail", new UserRole(1, "Employee"));
+		User r = new User(1, "jtest", "jtest", "testname", "lastname", "jtestemail", new UserRole(2, "Manager"));
 		Mockito.when(ud.delete(u.getUserId())).thenReturn(1);
 		assertTrue(us.deleteUser(u, r));
 	}

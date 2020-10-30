@@ -16,6 +16,11 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.1</version>
+				<configuration>
+					<excludes>
+						<exclude>**/*com/reimb/model/*</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -40,7 +45,7 @@
 							<!-- Sets the path to the file which contains the execution data. -->
 							<dataFile>target/jacoco.exec</dataFile>
 							<!-- Sets the output directory for the code coverage report. -->
-							<outputDirectory>target/my-reports</outputDirectory>
+							<outputDirectory>report</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
@@ -50,18 +55,18 @@
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.8.2</version>
 			</plugin>
-			      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M5</version>
-        <configuration>
-          <systemPropertyVariables>
-            <aws_url>jdbc:postgresql://revature.cdxwexrm1zaf.us-east-2.rds.amazonaws.com:5432/postgres</aws_url>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version>
+				<configuration>
+					<systemPropertyVariables>
+						<aws_url>jdbc:postgresql://revature.cdxwexrm1zaf.us-east-2.rds.amazonaws.com:5432/postgres</aws_url>
 						<aws_username>postgres</aws_username>
 						<aws_password>postgres</aws_password>
-          </systemPropertyVariables>
-        </configuration>
-      </plugin>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

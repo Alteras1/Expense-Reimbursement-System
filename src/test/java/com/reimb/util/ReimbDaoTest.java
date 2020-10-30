@@ -7,12 +7,13 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import com.reim.repo.ReimbDao;
+
 import com.reimb.model.Reimb;
 import com.reimb.model.ReimbStatus;
 import com.reimb.model.ReimbType;
 import com.reimb.model.User;
 import com.reimb.model.UserRole;
+import com.reimb.repo.ReimbDao;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReimbDaoTest {
@@ -38,13 +39,13 @@ public class ReimbDaoTest {
 	
 	@Test
 	public void AAAcreateTest() {
-		Reimb r = new Reimb(20.0, "desc", new User(1, "admin", "admin", "firstadmin", "lastname", "adminemail", new UserRole(2, "manager")), new ReimbStatus(1, "pending"), new ReimbType(1, "lodging"));
+		Reimb r = new Reimb(20.0, "desc", new User(1, "admin", "admin", "firstadmin", "lastname", "adminemail", new UserRole(2, "Manager")), new ReimbStatus(1, "Pending"), new ReimbType(1, "Lodging"));
 		assertNotEquals(0, rd.create(r));
 	}
 	
 	@Test
 	public void BBBupdateTest() {
-		Reimb r = new Reimb(20.0, "desc", new User(1, "admin", "admin", "firstadmin", "lastname", "adminemail", new UserRole(2, "manager")), new ReimbStatus(1, "pending"), new ReimbType(1, "lodging"));
+		Reimb r = new Reimb(20.0, "desc", new User(1, "admin", "admin", "firstadmin", "lastname", "adminemail", new UserRole(2, "Manager")), new ReimbStatus(1, "Pending"), new ReimbType(1, "Lodging"));
 		r.setReimbId(2);
 		assertNotEquals(0, rd.update(r));
 	}
@@ -57,12 +58,12 @@ public class ReimbDaoTest {
 	
 	@Test
 	public void simpleUpdateTest() {
-		assertNotEquals(0, rd.update(1, new ReimbStatus(3, "denied"), new User(1, "admin", "admin", "firstadmin", "lastname", "adminemail", new UserRole(2, "manager"))));
+		assertNotEquals(0, rd.update(1, new ReimbStatus(3, "Denied"), new User(1, "admin", "admin", "firstadmin", "lastname", "adminemail", new UserRole(2, "Manager"))));
 	}
 	
 	@Test
 	public void findByAuthorTest() {
-		List<Reimb> reimbs = rd.findByAuthor(new User(2, "test", "test", "firstname", "lastname", "email", new UserRole(1, "employee")));
+		List<Reimb> reimbs = rd.findByAuthor(new User(2, "test", "test", "firstname", "lastname", "email", new UserRole(1, "Employee")));
 		assertFalse(reimbs.size() == 0);
 	}
 }

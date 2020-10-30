@@ -2,10 +2,10 @@ package com.reimb.service;
 
 import java.util.List;
 
-import com.reim.repo.UserDao;
-import com.reim.repo.UserRoleDao;
 import com.reimb.model.User;
 import com.reimb.model.UserRole;
+import com.reimb.repo.UserDao;
+import com.reimb.repo.UserRoleDao;
 
 public class UserService {
 	
@@ -31,7 +31,7 @@ public class UserService {
 	}
 	
 	public boolean updateUser(User u, User requester) {
-		UserRole manager = urd.findByName("manager");
+		UserRole manager = urd.findByName("Manager");
 		if (u.getUserId() == requester.getUserId() || requester.getRole().equals(manager)) {
 			return (ud.update(u) != 0) ? true : false;
 		}
@@ -51,7 +51,7 @@ public class UserService {
 	}
 	
 	public boolean deleteUser(User u, User requester) {
-		UserRole manager = urd.findByName("manager");
+		UserRole manager = urd.findByName("Manager");
 		if (requester.getRole().equals(manager)) {
 			return (ud.delete(u.getUserId()) != 0) ? true : false;
 		}

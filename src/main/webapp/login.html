@@ -12,20 +12,133 @@
 
 	<title>Reimbursement</title>
 	<!-- <script defer type="text/javascript" src="./js/fetch.js"></script> -->
+
+	<link
+		href="https://fonts.googleapis.com/css2?family=Grandstander:wght@400;900&family=Open+Sans:wght@400;700&display=swap"
+		rel="stylesheet">
+	<script defer type="text/javascript" src="./js/fetch.js"></script>
+	<script defer type="text/javascript" src="./js/login.js"></script>
+	<link rel="stylesheet" href="./css/main.css" />
+	<link rel="stylesheet" href="./fontAwesome/css/all.min.css" />
 </head>
 
-<body>
-	<h1>Login</h1>
+<body style="font-family: 'Open Sans';">
+	<nav>
+		<div class="navbar navbar-expand-xl nav-flex">
+			<div class="navbar-brand">Mochi Mochi</div>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"><i class="fas fa-bars fa-lg fa-fw"></i></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/Reimbursement">Home</a>
+					</li>
+					<li class="nav-item dropdown">
+						<div class="nav-link dropdown-toggle accounts" href="#" id="accountLinks" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							Account
+						</div>
+						<div class="dropdown-menu" aria-labelledby="accountLinks">
+							<button type="button" class="dropdown-item" data-toggle="modal" data-target="#login"
+								id='loginButton'>
+								Login
+							</button>
+							<a class="dropdown-item" id="manager" href="/Reimbursement/Manager.html" hidden>Manager
+								View</a>
+							<a class="dropdown-item" id="employee" href="/Reimbursement/Employee.html" hidden>Employee
+								View</a>
+							<a class="dropdown-item" id="logout" href="/Reimbursement/logout.html" hidden>Logout</a>
 
-	<form id="login" class="login" action="/Reimbursement/api/login" method="POST">
-		<div>Login to Your Account</div>
-		<label for="username">Username:</label>
-		<input type="text" name="username">
-		<label for="password">Password:</label>
-		<input type="password" name="password">
-		<button type="submit">Login</button>
-	</form>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
+	<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Employee Login</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form action="/Reimbursement/api/login" method="POST">
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="username">Username:</label>
+							<input type="text" name="username" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="password">Password:</label>
+							<input type="password" name="password" class="form-control">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-primary">Login</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="banner">
+		<div class="title">Mochi Mochi</div>
+		<div class="subtitle">Tea, Snacks, and Mochi Donuts</div>
+	</div>
+
+	<div class="container-xl mt-3">
+		<img style="float: right;"
+			src='https://v1.nitrocdn.com/KQYMGOLIdXGmoAcyJsPOrQDKktgCbwtG/assets/static/source/rev-97d867a/wp-content/uploads/2019/09/mister-donut-pon-de-ring-image.jpg'>
+		<div class="intro-title">Welcome to Mochi Mochi!</div>
+		<p>We're a fun little bakery that sells beloved Mochi Donuts! Mochi Donuts, also known as Pon de Rings, are a
+			mix of a mochi and donut, giving it an extremely chewy softness! Originating from a fusion between American
+			and Japanese culture, these things are a delight to eat!</p>
+		<p>They're so good that they'll make even this poor developer want some. Because, when there's a Mochi Donut
+			stand just 10 mins away from your house, you'll just be begging to get some to top the day off!</p>
+		<p>But unfortunately, due to two weeks of non-stop coding, this developer was unable to buy some. And even when
+			this man had time, there was a problem. Yes, that's right! The Mochi Mochi has...</p>
+		<h5 class="display-4">Ever Changing Flavors!</h5>
+		<p>YES!!! THAT'S RIGHT!! Everyday, we make three different flavors, everything ranging from Matcha Green Tea, to
+			Chocolate, to Strawberry, to Doughnut Sugar, to Vanilla, and so much more! We even have Churro flavor!</p>
+		<p>And it is because of this neat little quirk, our poor developer has been unable to buy any of his favorite
+			flavors. That is until TODAY! This Friday, one of the flavors is Boba Milk Tea, a great flavor for a Mochi
+			Donut! Once this day is over, this developer will be picking up a dozen of these delectable treats.</p>
+		<h5 class="display-4">Festival Season</h5>
+		<p>During Festivals, you can catch us operating the Mochi Truck! Though we'll be happy to see you and happily
+			give you some delicious Mochi Donuts, remember to be courteous! </p>
+
+		<p>Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor.
+			Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus
+			risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris
+			ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum
+			velit. </p>
+
+		<p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed
+			lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla
+			facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum
+			sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. </p>
+
+		<p>Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at
+			interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+			cubilia Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue
+			congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit
+			vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet
+			mauris. Morbi in dui quis est pulvinar ullamcorper. </p>
+
+		<p>Nulla facilisi. Integer lacinia sollicitudin massa. Cras metus. Sed aliquet risus a tortor. Integer id quam.
+			Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales
+			libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies
+			eu, pede. Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. </p>
+
+
+	</div>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

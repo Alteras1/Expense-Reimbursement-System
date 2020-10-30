@@ -32,7 +32,8 @@ public class UserController {
 			res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		} else {
 			UserRole sessionRole = (UserRole) session.getAttribute("UserRole");
-			if (sessionRole.getRole() == "manager") {
+			System.out.println(sessionRole);
+			if (sessionRole.getRole().equals("Manager")) {
 				User newUser = om.readValue(req.getReader(), User.class);
 				Boolean success = userService.createUser(newUser);
 				res.setStatus((success) ? HttpServletResponse.SC_CREATED : HttpServletResponse.SC_CONFLICT);

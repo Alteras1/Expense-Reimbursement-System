@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.reim.repo.UserRoleDao;
 import com.reimb.model.UserRole;
+import com.reimb.repo.UserRoleDao;
 
 public class UserRolesDaoTest {
 
@@ -33,14 +33,14 @@ public class UserRolesDaoTest {
 	
 	@Test
 	public void updateTest() {
-		UserRole s = new UserRole(1, "employee");
+		UserRole s = new UserRole(1, "Employee");
 		assertNotEquals(0, urd.update(s));
 	}
 	
 	@Test
 	public void findByNameTest() {
-		UserRole s = urd.findByName("employee");
-		assertEquals(new UserRole(1, "employee"), s);
+		UserRole s = urd.findByName("Employee");
+		assertEquals(new UserRole(1, "Employee"), s);
 	}
 
 }

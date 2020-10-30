@@ -22,6 +22,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.CharSource;
 import com.reimb.model.Reimb;
@@ -39,6 +41,7 @@ public class ReimbControllerTest {
 	private HttpServletRequest req;
 	private HttpServletResponse res;
 	private HttpSession ses;
+	private ObjectMapper omm;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -47,19 +50,20 @@ public class ReimbControllerTest {
 		req = mock(HttpServletRequest.class);
 		res = mock(HttpServletResponse.class);
 		ses = mock(HttpSession.class);
+		omm = mock(ObjectMapper.class);
 	}
 
 	@Test
 	public void getUserTest() {
 		ReimbController rc = new ReimbController(rs, us);
-		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
+		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"Manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
 		ObjectMapper om = new ObjectMapper();
 		String reimb = "";
 		try {
-			reimb = om.writeValueAsString(new Reimb(20.0, "desc", manager, new ReimbStatus(1, "pending"), new ReimbType(1, "lodging")));
+			reimb = om.writeValueAsString(new Reimb(20.0, "desc", manager, new ReimbStatus(1, "Pending"), new ReimbType(1, "lodging")));
 		} catch (JsonProcessingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -85,14 +89,14 @@ public class ReimbControllerTest {
 	@Test
 	public void updateTest() {
 		ReimbController rc = new ReimbController(rs, us);
-		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
+		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"Manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		when(ses.getAttribute("User")).thenReturn(manager);
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
 		ObjectMapper om = new ObjectMapper();
 		String reimb = "";
-		Reimb reimbObj = new Reimb(20.0, "desc", manager, new ReimbStatus(1, "pending"), new ReimbType(1, "lodging"));
+		Reimb reimbObj = new Reimb(20.0, "desc", manager, new ReimbStatus(1, "Pending"), new ReimbType(1, "lodging"));
 		reimbObj.setReimbId(1);
 		try {
 			reimb = om.writeValueAsString(reimbObj);
@@ -122,14 +126,14 @@ public class ReimbControllerTest {
 	@Test
 	public void deleteTest() {
 		ReimbController rc = new ReimbController(rs, us);
-		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
+		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"Manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		when(ses.getAttribute("User")).thenReturn(manager);
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
 		ObjectMapper om = new ObjectMapper();
 		String reimb = "";
-		Reimb reimbObj = new Reimb(20.0, "desc", manager, new ReimbStatus(1, "pending"), new ReimbType(1, "lodging"));
+		Reimb reimbObj = new Reimb(20.0, "desc", manager, new ReimbStatus(1, "Pending"), new ReimbType(1, "lodging"));
 		reimbObj.setReimbId(1);
 		try {
 			reimb = om.writeValueAsString(reimbObj);
@@ -159,31 +163,29 @@ public class ReimbControllerTest {
 	@Test
 	public void verifyTest() {
 		ReimbController rc = new ReimbController(rs, us);
-		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
+		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"Manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		when(ses.getAttribute("User")).thenReturn(manager);
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
 		ObjectMapper om = new ObjectMapper();
-		String reimb = "";
-		String reimbStatus = "";
-		Reimb reimbObj = new Reimb(20.0, "desc", manager, new ReimbStatus(1, "pending"), new ReimbType(1, "lodging"));
-		ReimbStatus reimbStatusObj = new ReimbStatus(2, "approved");
-		reimbObj.setReimbId(1);
+		String json = "{\"reimb\":{\"reimbId\":1,\"amount\":20,\"submitted\":\"2020-10-29T07:00:00.000Z\",\"resolved\":null,\"description\":null,\"author\":{\"userId\":2,\"username\":\"test\",\"password\":\"0e7d43b3253e8f5ddceb9a07d1edfa52\",\"firstName\":\"firstname\",\"lastName\":\"lastname\",\"email\":\"email@email\",\"role\":{\"roleId\":1,\"role\":\"Employee\"}},\"resolver\":null,\"status\":{\"statusId\":1,\"status\":\"Pending\"},\"type\":{\"typeId\":1,\"type\":\"Lodging\"}},\"status\":{\"statusId\":\"2\",\"status\":\"Pending\"}}";
+		JsonNode jsonNode = null;
 		try {
-			reimb = om.writeValueAsString(reimbObj);
-			reimbStatus = om.writeValueAsString(reimbStatusObj);
+			jsonNode = om.readTree(json);
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		} catch (JsonProcessingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		Reimb newReimb = om.convertValue(jsonNode.get("reimb"), Reimb.class);
+		ReimbStatus newStatus = om.convertValue(jsonNode.get("status"), ReimbStatus.class);
 		try {
-			when(req.getParameter("reimb")).thenReturn(reimb);
-			when(req.getParameter("status")).thenReturn(reimbStatus);
-			Reimb reimbObjNew = om.readValue(new BufferedReader(CharSource.wrap(reimb).openStream()), Reimb.class);
-			ReimbStatus reimbStatusObjNew = om.readValue(new BufferedReader(CharSource.wrap(reimbStatus).openStream()), ReimbStatus.class);
+			when(omm.readTree(req.getInputStream())).thenReturn(jsonNode);
 			when(res.getWriter()).thenReturn(writer);
-			when(rs.changeStatus(reimbObjNew, reimbStatusObjNew, manager)).thenReturn(true);
+			when(rs.changeStatus(newReimb, newStatus, manager)).thenReturn(true);
 			rc.verify(req, res);
 		} catch (IOException e) {
 
@@ -201,14 +203,14 @@ public class ReimbControllerTest {
 	@Test
 	public void viewByIdTest() {
 		ReimbController rc = new ReimbController(rs, us);
-		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
+		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"Manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		when(req.getPathInfo()).thenReturn("/reimb/id/1");
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter writer = new PrintWriter(stringWriter);
 		ObjectMapper om = new ObjectMapper();
 		String reimb = "";
-		Reimb reimbObj = new Reimb(20.0, "desc", manager, new ReimbStatus(1, "pending"), new ReimbType(1, "lodging"));
+		Reimb reimbObj = new Reimb(20.0, "desc", manager, new ReimbStatus(1, "Pending"), new ReimbType(1, "lodging"));
 		reimbObj.setReimbId(1);
 		try {
 			reimb = om.writeValueAsString(reimbObj);
@@ -237,7 +239,7 @@ public class ReimbControllerTest {
 	public void viewByAuthorTest() {
 		ReimbController rc = new ReimbController(rs, us);
 		ObjectMapper om = new ObjectMapper();
-		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"manager"));
+		User manager = new User(1, "admin", "admin", "first", "last", "email", new UserRole(2,"Manager"));
 		when(req.getSession(false)).thenReturn(ses);
 		when(ses.getAttribute("User")).thenReturn(manager);
 		when(req.getPathInfo()).thenReturn("/reimb/author/1");
@@ -246,7 +248,7 @@ public class ReimbControllerTest {
 		when(us.findById(1)).thenReturn(manager);
 		String reimbList = "";
 		List<Reimb> reimbs = new LinkedList<Reimb>();
-		reimbs.add(new Reimb(1,20.0, "desc", manager, new ReimbStatus(1, "pending"), new ReimbType(1, "lodging")));
+		reimbs.add(new Reimb(1,20.0, "desc", manager, new ReimbStatus(1, "Pending"), new ReimbType(1, "lodging")));
 		try {
 			reimbList = om.writeValueAsString(reimbs);
 		} catch (JsonProcessingException e1) {
