@@ -29,7 +29,7 @@ public class LoginController {
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");
 			
-			User user = userService.verify(username, username);
+			User user = userService.verify(username, password);
 			
 			if (username.isEmpty() || password.isEmpty() || (user == null)) {
 				res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
