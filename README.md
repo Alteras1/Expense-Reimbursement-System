@@ -2,7 +2,7 @@
 
 This is the Expense Reimbursement System project, made by me, Steven Chang (Alteras1). The goal is to create a full stack website and backend that will take in reimbursement claims made by a user, which can be approved by a manager, and subsequently be updated in both the user view and in the database. The premise of this site is that it is a site for a Mochi Donut Bakery.
 
-Here is a link to a [live site](http://ec2-3-138-197-174.us-east-2.compute.amazonaws.com:8080/Reimbursement/), where you can view it in action. By default, there is a manager user with the credentials `johnsamson` and `samsonite`, and an user with the credentials `emilylee` and `leelee`.
+Here is a link to a [live site](http://18.222.229.144:8080/Reimbursement/), where you can view it in action. By default, there is a manager user with the credentials `johnsamson` and `samsonite`, and an user with the credentials `emilylee` and `leelee`.
 
 ## Technologies Used
 
